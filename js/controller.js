@@ -40,6 +40,8 @@ class Controller {
     readAllRecords() {
         if (status == Status.OFFLINE){
             console.log("OFFLINE");
+            // wyświetl na View
+
         } else if ( status == Status.ONLINE){
             console.log("ONLINE");
              // JSON --> [ {  }, { } , { }  ]
