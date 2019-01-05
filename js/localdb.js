@@ -1,23 +1,16 @@
 var db;
 
-function run() {
-
-   var instance1 = Singleton.getInstance();
-   var instance2 = Singleton.getInstance();
-
-   alert("Same instance? " + (instance1 === instance2));  
-}
 
 class localdb {
 
-   constructor(){
 
+   constructor(){
       if (!window.indexedDB) {
          window.alert("Your browser doesn't support a stable version of IndexedDB.")
       }
       const account = [
-         { id: "00-01", name: "Aloizy", phone: "827293928", email: "alakalsd@powalikos.com" },
-         { id: "00-02", name: "Jamajka", phone: "329273627", email: "asfasfa@kolpaka.com" }
+         { id: "00-01", name: "Aloizy", phone: "827293928", age: 35, email: "alakalsd@powalikos.com" },
+         { id: "00-02", name: "Jamajka", phone: "329273627", age: 666, email: "asfasfa@kolpaka.com" }
       ];
       const contact = [
          { id: "00-01", firstname: "Aloizy", lastname: "Mieczysław", age: 35, email: "gasga@asfasfa.com" },
