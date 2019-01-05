@@ -1,5 +1,5 @@
 
-var SizeEnum = {
+var Status = {
     ONLINE: 1,
     OFFLINE: 2,
   };
@@ -7,11 +7,11 @@ var SizeEnum = {
 function checkStatus() {
     var stat = document.getElementById("status");
     if (navigator.onLine) {
-        status = SizeEnum.ONLINE;
+        status = Status.ONLINE;
         stat.innerHTML = "Online :D";
         stat.style.backgroundColor = "green";
     } else {
-        status = SizeEnum.OFFLINE;
+        status = Status.OFFLINE;
         stat.innerHTML = "Offline :(";
         stat.style.backgroundColor = "red"
     }

@@ -36,7 +36,23 @@ class Controller {
 
         // this.content.appendChild('table')
     }
+
+    readAllRecords() {
+        if (status == Status.OFFLINE){
+            console.log("OFFLINE");
+        } else if ( status == Status.ONLINE){
+            console.log("ONLINE");
+             // JSON --> [ {  }, { } , { }  ]
+            
+             // zapisz w lokalnej bazie danych JSONa
+
+             // wyświetl na View
+    
+        }
+    }
+
 }
+
 
 function listener(){
     var tabs = document.getElementsByClassName('tabs');
@@ -60,7 +76,7 @@ function listener(){
     }
     console.log(controller.actualTab);
 
-    controller.loadata();
+    controller.readAllRecords();
 }
 
 var controller;
