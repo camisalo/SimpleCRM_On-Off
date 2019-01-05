@@ -53,35 +53,32 @@ class localdb {
     
 
    read() {
+      return new Promise((resolve, reject) => {
+         var transaction = db.transaction(["account"],"readwrite");
+         var objectStore = transaction.objectStore("account");
+         var request = objectStore.get("00-01");
 
-        var transaction = db.transaction(["account"],"readwrite");
-        var objectStore = transaction.objectStore("account", {keyPath: "id"});
-        var request = objectStore.get("00-01");
-        
-         setTimeout(function(){
+         console.log("XDXDDXD");
+         
+         request.onerror = function(event) {
+            alert("Unable to retrieve daa from database!");
+         };
+         
+         // var x = document.getElementById("content");
+         // x.innerHTML = "<table><th><td>BYCZ</td><td> ELO</td></th></table>";
+         
+         request.onsuccess = function(event) {
+            var res = event.target.result;
 
-            console.log(request.result.name);
-            request.onerror = function(event) {
-               alert("Unable to retrieve daa from database!");
-            };
-            
-            //request.onsuccess = function(event) {
-               // Do something with the request.result!
-               
-               if(request.result) {
-                  console.log("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
-                  return ("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
-               } else {
-                  return "Kenny couldn't be found in your database!";
-               }
-    
-    
-            //};
-
-         }, 2000);
-
-
-      return null;
+            if(request.result) {
+               var x = document.getElementById("content");
+               x.innerHTML = "<table><th><td>"+res.name+"</td><td> "+ res.email + "</td></th></table>";
+               // return "Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email;
+            } else {
+               return "Kenny couldn't be found in your database!";
+            }
+         };
+      }); 
    }
 
    readAll(_tab) {
