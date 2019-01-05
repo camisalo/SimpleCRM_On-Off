@@ -1,3 +1,13 @@
+var db;
+
+function run() {
+
+   var instance1 = Singleton.getInstance();
+   var instance2 = Singleton.getInstance();
+
+   alert("Same instance? " + (instance1 === instance2));  
+}
+
 class localdb {
 
    constructor(){
@@ -13,7 +23,7 @@ class localdb {
          { id: "00-01", firstname: "Aloizy", lastname: "Mieczysław", age: 35, email: "gasga@asfasfa.com" },
          { id: "00-02", firstname: "Jamajka",lastname: "Kobyła", age: 32, email: "asfassag@asfasf.com" }
       ];
-      this.db;
+      db;
       var request = window.indexedDB.open("CRM", 1);
 
       request.onerror = function(event) {
@@ -21,14 +31,14 @@ class localdb {
       };
             
       request.onsuccess = function(event) {
-         this.db = request.result;
-         console.log("success: "+ this.db);
+         db = request.result;
+         console.log("success: "+ db);
       };
 
       request.onupgradeneeded = function(event) {
-      this.db = event.target.result;
-      var objectStore1 = this.db.createObjectStore("account", {keyPath: "id"});
-      var objectStore2 = this.db.createObjectStore("contact", {keyPath: "id"});
+      db = event.target.result;
+      var objectStore1 = db.createObjectStore("account", {keyPath: "id"});
+      var objectStore2 = db.createObjectStore("contact", {keyPath: "id"});
 
          for (var i in account) {
             objectStore1.add(account[i]);
@@ -40,11 +50,11 @@ class localdb {
    }
 
    opendb() {
-      this.db;
+      db;
       var request = indexedDB.open("CRM", 1);  
   
       request.onsuccess = function (evt) {
-         this.db = request.result; 
+         db = request.result; 
       }
    }
     
@@ -52,26 +62,34 @@ class localdb {
     
 
    read() {
-        var transaction = this.db.transaction(["account"],"readwrite");
-        var objectStore = transaction.objectStore("account");
-        var request = objectStore.get("00-01");
-        
-        request.onerror = function(event) {
-           alert("Unable to retrieve daa from database!");
-        };
-        
-        request.onsuccess = function(event) {
-           // Do something with the request.result!
-           if(request.result) {
-              return "Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email;
-           } else {
-              return "Kenny couldn't be found in your database!";
-           }
-      };
+      return new Promise((resolve, reject) => {
+         var transaction = db.transaction(["account"],"readwrite");
+         var objectStore = transaction.objectStore("account");
+         var request = objectStore.get("00-01");
+         console.log("XDXDDXD");
+         request.onerror = function(event) {
+            alert("Unable to retrieve daa from database!");
+         };
+         
+         // var x = document.getElementById("content");
+         // x.innerHTML = "<table><th><td>BYCZ</td><td> ELO</td></th></table>";
+         
+         request.onsuccess = function(event) {
+            var res = event.target.result;
+
+            if(request.result) {
+               var x = document.getElementById("content");
+               x.innerHTML = "<table><th><td>"+res.name+"</td><td> "+ res.email + "</td></th></table>";
+               // return "Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email;
+            } else {
+               return "Kenny couldn't be found in your database!";
+            }
+         };
+      }); 
    }
 
    readAll(_tab) {
-      var objectStore = this.db.transaction([_tab]).objectStore(_tab);
+      var objectStore = db.transaction([_tab]).objectStore(_tab);
       
       objectStore.openCursor().onsuccess = function(event) {
          var cursor = event.target.result;

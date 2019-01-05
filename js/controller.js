@@ -6,8 +6,6 @@ var Tab = {
     OPPORTUNITIES: 'opportunities',
   };
 
-
-
 class Controller {
 
     constructor(_tab){
@@ -20,13 +18,24 @@ class Controller {
         a[2].addEventListener('click',listener);
         a[3].addEventListener('click',listener);
 
-
         this.content = document.getElementById('content');
     }
 
     loadata() {
-        this.localdb.readAll(this.actualTab);
-        this.content.appendChild('table')
+        console.log(this.actualTab);
+
+        this.localdb.read(function callback(err,content){
+            console.log(content);
+            console.log("SIEMA");
+            console.log(err);
+        });
+
+        
+        // getAsync(this.localdb.read(), function callback(data) { 
+        //     console.log(data); 
+        // });
+
+        // this.content.appendChild('table')
     }
 }
 
@@ -55,7 +64,4 @@ function listener(){
     controller.loadata();
 }
 
-
-
 var controller;
-
