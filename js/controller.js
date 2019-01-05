@@ -26,7 +26,7 @@ class Controller {
 
     loadata() {
         this.localdb.readAll(this.actualTab);
-        this.content.appendChild('table')
+        //this.content.appendChild('table')
     }
 }
 

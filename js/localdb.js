@@ -1,7 +1,9 @@
+var db;
+
 class localdb {
 
-   constructor(){
 
+   constructor(){
       if (!window.indexedDB) {
          window.alert("Your browser doesn't support a stable version of IndexedDB.")
       }
@@ -13,7 +15,7 @@ class localdb {
          { id: "00-01", firstname: "Aloizy", lastname: "Mieczysław", age: 35, email: "gasga@asfasfa.com" },
          { id: "00-02", firstname: "Jamajka",lastname: "Kobyła", age: 32, email: "asfassag@asfasf.com" }
       ];
-      this.db;
+
       var request = window.indexedDB.open("CRM", 1);
 
       request.onerror = function(event) {
@@ -21,14 +23,14 @@ class localdb {
       };
             
       request.onsuccess = function(event) {
-         this.db = request.result;
-         console.log("success: "+ this.db);
+         db =  request.result;
+         console.log("success: "+ db);
       };
 
       request.onupgradeneeded = function(event) {
-      this.db = event.target.result;
-      var objectStore1 = this.db.createObjectStore("account", {keyPath: "id"});
-      var objectStore2 = this.db.createObjectStore("contact", {keyPath: "id"});
+      db = event.target.result;
+      var objectStore1 = db.createObjectStore("account", {keyPath: "id"});
+      var objectStore2 = db.createObjectStore("contact", {keyPath: "id"});
 
          for (var i in account) {
             objectStore1.add(account[i]);
@@ -40,11 +42,10 @@ class localdb {
    }
 
    opendb() {
-      this.db;
-      var request = indexedDB.open("CRM", 1);  
+      var request = window.indexedDB.open("CRM", 1);  
   
-      request.onsuccess = function (evt) {
-         this.db = request.result; 
+      request.onsuccess = function (event) {
+         db = request.result; 
       }
    }
     
@@ -52,7 +53,8 @@ class localdb {
     
 
    read() {
-        var transaction = this.db.transaction(["account"],"readwrite");
+
+        var transaction = db.transaction(["account"],"readwrite");
         var objectStore = transaction.objectStore("account");
         var request = objectStore.get("00-01");
         
@@ -71,7 +73,8 @@ class localdb {
    }
 
    readAll(_tab) {
-      var objectStore = this.db.transaction([_tab]).objectStore(_tab);
+
+      var objectStore = db.transaction([_tab]).objectStore(_tab);
       
       objectStore.openCursor().onsuccess = function(event) {
          var cursor = event.target.result;
