@@ -80,9 +80,9 @@ class localdb {
             if(request.result) {
                var x = document.getElementById("content");
                x.innerHTML = "<table><th><td>"+res.name+"</td><td> "+ res.email + "</td></th></table>";
-               // return "Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email;
+               resolve("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
             } else {
-               return "Kenny couldn't be found in your database!";
+               reject("Kenny couldn't be found in your database!");
             }
          };
       }); 

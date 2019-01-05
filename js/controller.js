@@ -24,11 +24,10 @@ class Controller {
     loadata() {
         console.log(this.actualTab);
 
-        this.localdb.read(function callback(err,content){
-            console.log(content);
-            console.log("SIEMA");
-            console.log(err);
-        });
+        this.localdb.read().then((data) => {
+            console.log(data);
+            console.log("siema");
+        })
 
         
         // getAsync(this.localdb.read(), function callback(data) { 
