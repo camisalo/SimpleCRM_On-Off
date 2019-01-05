@@ -8,8 +8,8 @@ class localdb {
          window.alert("Your browser doesn't support a stable version of IndexedDB.")
       }
       const account = [
-         { id: "00-01", name: "Aloizy", phone: "827293928", email: "alakalsd@powalikos.com" },
-         { id: "00-02", name: "Jamajka", phone: "329273627", email: "asfasfa@kolpaka.com" }
+         { id: "00-01", name: "Aloizy", phone: "827293928", age: 35, email: "alakalsd@powalikos.com" },
+         { id: "00-02", name: "Jamajka", phone: "329273627", age: 666, email: "asfasfa@kolpaka.com" }
       ];
       const contact = [
          { id: "00-01", firstname: "Aloizy", lastname: "Mieczysław", age: 35, email: "gasga@asfasfa.com" },
@@ -55,21 +55,33 @@ class localdb {
    read() {
 
         var transaction = db.transaction(["account"],"readwrite");
-        var objectStore = transaction.objectStore("account");
+        var objectStore = transaction.objectStore("account", {keyPath: "id"});
         var request = objectStore.get("00-01");
         
-        request.onerror = function(event) {
-           alert("Unable to retrieve daa from database!");
-        };
-        
-        request.onsuccess = function(event) {
-           // Do something with the request.result!
-           if(request.result) {
-              return "Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email;
-           } else {
-              return "Kenny couldn't be found in your database!";
-           }
-      };
+         setTimeout(function(){
+
+            console.log(request.result.name);
+            request.onerror = function(event) {
+               alert("Unable to retrieve daa from database!");
+            };
+            
+            //request.onsuccess = function(event) {
+               // Do something with the request.result!
+               
+               if(request.result) {
+                  console.log("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
+                  return ("Name: " + request.result.name + ", Age: " + request.result.age + ", Email: " + request.result.email);
+               } else {
+                  return "Kenny couldn't be found in your database!";
+               }
+    
+    
+            //};
+
+         }, 2000);
+
+
+      return null;
    }
 
    readAll(_tab) {

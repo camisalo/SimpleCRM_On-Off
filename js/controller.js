@@ -25,7 +25,16 @@ class Controller {
     }
 
     loadata() {
-        this.localdb.readAll(this.actualTab);
+
+        
+            var a = this.localdb.read(function callback(err,content)/*this.actualTab*/{
+                console.log(err);
+                console.log("siema");
+                console.log(content);
+
+            });
+
+        console.log(a);
         //this.content.appendChild('table')
     }
 }
