@@ -3,7 +3,7 @@ var model = new Model();
 class Controller {
 
     constructor(){
-        this.actualTab;
+        this.actualTab = Tab.ACCOUNTS;
         this.localdb = localdb.getInstance();
 
         this.synchronize();
@@ -11,31 +11,43 @@ class Controller {
     }
 
     synchronize(){
-        model.getRecordsFromServer("http://localhost:8080/crm/account").then((data) => {
-                console.log("callback");
-                console.log(data);
-                content.innerHTML = data;
-                
-            }).catch((err) => {alert(err);}
+        model.getRecordsFromServer("http://localhost:8080/crm/account")
+            .then((data) => {
+               console.log("callback");
+               console.log(data);
+               content.innerHTML = data;
+               
+               model.saveToLocalDB(data, this.actualTab);
+            })
+            .catch((err) => {alert(err);}
         );
-            
-       
-      // $.ajax({
-      //    url: "http://localhost:8080/crm/account",
-      //  }).done(function(data) {
-       
-      //    console.log(data);
-      //  });
-
-        console.log("XXXXXXXXXXXXXXXXXXXXXXX");
      }
       
+     changeTab() {
+        model.readRecords(this.actualTab)
+         .then((data) => {
+            console.log(data);
+            controller.showRecords(data);
+         })
+         .catch((err) => {alert(err);}
+        );
+     }
 
+     showRecords(data){
+         var content = document.getElementById('content');
+         var table = "<table><tr><th>Name</th><th>address</th><th>phone</th></tr>";
+         var i;
+         for (i=0;i<10;i++){
+            table += "<tr id=\""+data[i].id+"\"><td>"+ data[i].name+"</td><td>"+data[i].address+"</td><td>"+data[i].phone+"</td></th>";
+         }
+         table += "</table>";
+         console.log(table);
+         content.innerHTML = table;
+     }
 
+     showDetails(id) {
 
-
-
-
+     }
 
 
 
@@ -87,11 +99,6 @@ class Controller {
            }
         };
      }
-
-
-
-
-
 
 
     loadata() {

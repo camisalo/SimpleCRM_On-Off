@@ -14,29 +14,39 @@ var status;
 var controller = new Controller();
 
 
-function listener(){
+function clearColorTabs() {
     var tabs = document.getElementsByClassName('tabs');
     for (var i=0; i<tabs.length; i++){
         tabs[i].style.backgroundColor = 'transparent';
     }
-    this.style.backgroundColor = 'green';
-    switch (this.innerHTML){
-        case 'Accounts':
-            controller.actualTab = Tab.ACCOUNTS;
-            break;
-        case 'Contacts':
-            controller.actualTab = Tab.CONTACTS;
-            break;
-        case 'Attempts':
-            controller.actualTab = Tab.ATTEMPTS;
-            break;
-        case 'Opportunities':
-            controller.actualTab = Tab.OPPORTUNITIES;
-            break
-    }
-    console.log(controller.actualTab);
+}
 
-    controller.readAllRecords();
+function listenerAccount() {
+    clearColorTabs();
+    controller.actualTab = Tab.ACCOUNTS;
+    this.style.backgroundColor = 'green';
+    controller.changeTab();
+}
+
+function listenerContacts() {
+    clearColorTabs();
+    controller.actualTab = Tab.CONTACTS;
+    this.style.backgroundColor = 'green';
+    controller.changeTab();
+}
+
+function listenerAttempts() {
+    clearColorTabs();
+    controller.actualTab = Tab.ATTEMPTS;
+    this.style.backgroundColor = 'green';
+    controller.changeTab();
+}
+
+function listenerOpportunities() {
+    clearColorTabs();
+    controller.actualTab = Tab.OPPORTUNITIES;
+    this.style.backgroundColor = 'green';
+    controller.changeTab();
 }
 
 
@@ -47,10 +57,10 @@ function onload() {
     console.log("START");
 
     var a = document.getElementsByClassName('tabs');
-    a[0].addEventListener('click',listener);
-    a[1].addEventListener('click',listener);
-    a[2].addEventListener('click',listener);
-    a[3].addEventListener('click',listener);
+    a[0].addEventListener('click',listenerAccount);
+    a[1].addEventListener('click',listenerContacts);
+    a[2].addEventListener('click',listenerAttempts);
+    a[3].addEventListener('click',listenerOpportunities);
 
     setInterval(checkStatus,1000);
 }
