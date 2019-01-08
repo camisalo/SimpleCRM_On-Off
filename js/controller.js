@@ -11,9 +11,10 @@ class Controller {
     }
 
     synchronize(){
-        model.getAccounts().then((data) => {
+        model.getRecordsFromServer("http://localhost:8080/crm/account").then((data) => {
                 console.log("callback");
                 console.log(data);
+                content.innerHTML = data;
                 
             }).catch((err) => {alert(err);}
         );

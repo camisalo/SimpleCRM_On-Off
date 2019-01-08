@@ -1,6 +1,6 @@
 class Model {
 
-    getAccounts() {
+    getRecordsFromServer(url) {
         return new Promise((resolve, reject) => { 
             var httpReq = new XMLHttpRequest(); 
             httpReq.onreadystatechange = () => { 
@@ -12,9 +12,10 @@ class Model {
                     } 
                 } 
             }
-            httpReq.open("GET", "http://localhost:8080/crm/account", true); 
+            httpReq.open("GET", url, true); 
             httpReq.withCredentials = true;
             httpReq.setRequestHeader('Content-Type','application/json');
+            httpReq.setRequestHeader('x-Trigger', 'CORS')
             httpReq.send(); 
         });    
     }
