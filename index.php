@@ -3,6 +3,8 @@
 <html manifest="cache.manifest" lang="pl"> 
 <head>
 
+
+
     <title>System CRM</title>
     <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 
