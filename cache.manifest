@@ -1,10 +1,21 @@
 CACHE MANIFEST
 
-CACHE:
-//index.html
+FALLBACK:
+/ /Wzorce/index.php
 style/menu.css
 style/view.css
 js/view.js
 js/singleton.js
 js/controller.js
 js/model.js
+http://localhost:8080/crm/account
+
+CACHE:
+index.php
+style/menu.css
+style/view.css
+js/view.js
+js/singleton.js
+js/controller.js
+js/model.js
+http://localhost:8080/crm/account
