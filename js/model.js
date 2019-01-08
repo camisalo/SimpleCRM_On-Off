@@ -13,10 +13,10 @@ class Model {
                 } 
             }
             httpReq.open("GET", url, true); 
-            httpReq.withCredentials = true;
+           // httpReq.withCredentials = false;
             httpReq.setRequestHeader('Content-Type','application/json');
-            httpReq.setRequestHeader('x-Trigger', 'CORS')
-            httpReq.send(); 
+            //httpReq.setRequestHeader
+            httpReq.send(null); 
         });    
     }
 

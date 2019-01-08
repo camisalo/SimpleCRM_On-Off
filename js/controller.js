@@ -20,6 +20,13 @@ class Controller {
         );
             
        
+      // $.ajax({
+      //    url: "http://localhost:8080/crm/account",
+      //  }).done(function(data) {
+       
+      //    console.log(data);
+      //  });
+
         console.log("XXXXXXXXXXXXXXXXXXXXXXX");
      }
       
