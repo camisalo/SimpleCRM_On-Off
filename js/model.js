@@ -55,7 +55,7 @@ class Model {
     }
 
 
-    readRecords(tab){
+    getRecords(tab){
         return new Promise((resolve, reject) => {
             var openRequest = window.indexedDB.open("CRM", 1);
             console.log('XX 1');
@@ -82,6 +82,34 @@ class Model {
                         resolve(event.target.result);
                     };
                 }
+            }
+        });
+    }
+
+    getRecordsById(tab, id){
+        return new Promise((resolve, reject) => {
+            var openRequest = window.indexedDB.open("CRM", 1);
+
+            openRequest.onerror = function(event) {
+                console.log(event);
+            };
+            openRequest.onsuccess = function(event) {
+
+                var db = openRequest.result;
+                db.onerror = function(event) {
+                    // Generic error handler for all errors targeted at this database's requests
+                    console.error(event.target);
+                    window.alert("Database error: " + event.target.wePutrrorMessage || event.target.error.name || event.target.error || event.target.errorCode);
+                };
+                console.log(tab);
+                var transaction = db.transaction(tab, 'readonly');
+                var itemStore = transaction.objectStore(tab);
+            
+                console.log(id);
+                itemStore.get(id).onsuccess = function(event) {
+                    resolve(event.target.result);
+                };
+                
             }
         });
     }

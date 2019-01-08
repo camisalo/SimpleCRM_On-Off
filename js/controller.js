@@ -2,17 +2,17 @@ var model = new Model();
 
 class Controller {
 
-    constructor(){
-        this.actualTab = Tab.ACCOUNTS;
-        this.localdb = localdb.getInstance();
+   constructor(){
+      this.actualTab = Tab.ACCOUNTS;
+      this.localdb = localdb.getInstance();
 
-        this.synchronize();
-        this.content = document.getElementById('content');
-    }
+      this.synchronize();
+      this.content = document.getElementById('content');
+   }
 
-    synchronize(){
-        model.getRecordsFromServer("http://localhost:8080/crm/account")
-            .then((data) => {
+   synchronize(){
+      model.getRecordsFromServer("http://localhost:8080/crm/account")
+           .then((data) => {
                console.log("callback");
                console.log(data);
                content.innerHTML = data;
@@ -23,31 +23,38 @@ class Controller {
         );
      }
       
-     changeTab() {
-        model.readRecords(this.actualTab)
+   changeTab() {
+      model.getRecords(this.actualTab)
          .then((data) => {
             console.log(data);
             controller.showRecords(data);
+            addActionListenerToRecords();
          })
          .catch((err) => {alert(err);}
-        );
-     }
+      );
+   }
 
-     showRecords(data){
-         var content = document.getElementById('content');
-         var table = "<table><tr><th>Name</th><th>address</th><th>phone</th></tr>";
-         var i;
-         for (i=0;i<10;i++){
-            table += "<tr id=\""+data[i].id+"\"><td>"+ data[i].name+"</td><td>"+data[i].address+"</td><td>"+data[i].phone+"</td></th>";
-         }
-         table += "</table>";
-         console.log(table);
-         content.innerHTML = table;
-     }
+   showRecords(data){
+      var content = document.getElementById('content');
+      var table = "<table><tr><th>Name</th><th>address</th><th>phone</th></tr>";
+      var i;
+      for (i=0;i<Object.keys(data).length;i++){
+         table += "<tr id=\""+data[i].id+"\"><td>"+ data[i].name+"</td><td>"+data[i].address+"</td><td>"+data[i].phone+"</td></th>";
+      }
+      table += "</table>";
+      console.log(table);
+      content.innerHTML = table;
+   }
 
-     showDetails(id) {
-
-     }
+   showDetails(id) {
+      console.log("controller " + id);
+      model.getRecordsById(this.actualTab, id)
+         .then((data) => {
+            
+         })
+         .catch((err) => {alert(err);}
+      );
+   }
 
 
 

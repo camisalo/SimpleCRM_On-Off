@@ -33,6 +33,7 @@ function listenerContacts() {
     controller.actualTab = Tab.CONTACTS;
     this.style.backgroundColor = 'green';
     controller.changeTab();
+    addActionListenerToRecords();
 }
 
 function listenerAttempts() {
@@ -40,6 +41,7 @@ function listenerAttempts() {
     controller.actualTab = Tab.ATTEMPTS;
     this.style.backgroundColor = 'green';
     controller.changeTab();
+    addActionListenerToRecords();
 }
 
 function listenerOpportunities() {
@@ -47,6 +49,27 @@ function listenerOpportunities() {
     controller.actualTab = Tab.OPPORTUNITIES;
     this.style.backgroundColor = 'green';
     controller.changeTab();
+    addActionListenerToRecords();
+}
+
+function addActionListenerToRecords() {
+    var content = document.getElementById('content');
+    var records = content.childNodes[0].childNodes[0].childNodes;
+    var array_records = Array.from(records);
+    array_records.forEach(function(item){
+        console.log(item);
+        console.log(item.id);
+
+        item.addEventListener('click',showDetailsForRecord(item.id));
+    });
+}
+
+
+
+function showDetailsForRecord(id) {
+    console.log("POM" + id);
+    controller.showDetails(this.id);
+
 }
 
 
