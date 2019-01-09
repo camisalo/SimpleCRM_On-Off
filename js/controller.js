@@ -13,11 +13,17 @@ class Controller {
    synchronize(){
       model.getRecordsFromServer("http://localhost:8080/crm/account")
            .then((data) => {
-               console.log("callback");
-               console.log(data);
                content.innerHTML = data;
                
-               model.saveToLocalDB(data, this.actualTab);
+               model.saveToLocalDB(data, Tab.ACCOUNTS);
+            })
+            .catch((err) => {alert(err);}
+        );
+        model.getRecordsFromServer("http://localhost:8080/crm/contact")
+           .then((data) => {
+               content.innerHTML = data;
+               
+               model.saveToLocalDB(data, Tab.CONTACTS);
             })
             .catch((err) => {alert(err);}
         );
@@ -26,7 +32,6 @@ class Controller {
    changeTab() {
       model.getRecords(this.actualTab)
          .then((data) => {
-            console.log(data);
             controller.showRecords(data);
             addActionListenerToRecords();
          })
@@ -35,6 +40,13 @@ class Controller {
    }
 
    showRecords(data){
+
+
+      var supervisor = new Supervisor();
+      supervisor.build();
+
+
+
       var content = document.getElementById('content');
       var table = "<table><tr><th>Name</th><th>address</th><th>phone</th></tr>";
       var i;
@@ -42,15 +54,15 @@ class Controller {
          table += "<tr id=\""+data[i].id+"\"><td>"+ data[i].name+"</td><td>"+data[i].address+"</td><td>"+data[i].phone+"</td></th>";
       }
       table += "</table>";
-      console.log(table);
       content.innerHTML = table;
    }
 
    showDetails(id) {
-      console.log("controller " + id);
       model.getRecordsById(this.actualTab, id)
          .then((data) => {
-            
+            var details = document.getElementById('form');
+            details.innerHTML = data;
+
          })
          .catch((err) => {alert(err);}
       );

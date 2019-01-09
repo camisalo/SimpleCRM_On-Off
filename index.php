@@ -12,6 +12,8 @@
     <link rel="stylesheet" type="text/css" href="style/view.css"/>
     <link rel="shortcut icon" href="#" />
    
+    <script src="js/builder/supervisor.js"></script>
+    <script src="js/builder/TableBuilder.js"></script>
     <script src="js/singleton.js"></script>
     <script src="js/model.js"></script>
     <script src="js/controller.js"></script>
@@ -37,7 +39,9 @@
         <div id="view">
             <div id="left-menu">
                 <h2>Details</h2>
+                <div id="form">
 
+                </div>
             </div>
             <div id="content">
 

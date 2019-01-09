@@ -25,50 +25,52 @@ function listenerAccount() {
     clearColorTabs();
     controller.actualTab = Tab.ACCOUNTS;
     this.style.backgroundColor = 'green';
-    controller.changeTab();
+    afterRecordClickListener();
 }
 
 function listenerContacts() {
     clearColorTabs();
     controller.actualTab = Tab.CONTACTS;
     this.style.backgroundColor = 'green';
-    controller.changeTab();
-    addActionListenerToRecords();
+    afterRecordClickListener();
 }
 
 function listenerAttempts() {
     clearColorTabs();
     controller.actualTab = Tab.ATTEMPTS;
     this.style.backgroundColor = 'green';
-    controller.changeTab();
-    addActionListenerToRecords();
+    afterRecordClickListener();
 }
 
 function listenerOpportunities() {
     clearColorTabs();
     controller.actualTab = Tab.OPPORTUNITIES;
     this.style.backgroundColor = 'green';
+    afterRecordClickListener();
+}
+
+function afterRecordClickListener() {
     controller.changeTab();
-    addActionListenerToRecords();
 }
 
 function addActionListenerToRecords() {
     var content = document.getElementById('content');
     var records = content.childNodes[0].childNodes[0].childNodes;
     var array_records = Array.from(records);
-    array_records.forEach(function(item){
-        console.log(item);
-        console.log(item.id);
 
-        item.addEventListener('click',showDetailsForRecord(item.id));
-    });
+    for (var i = 1; i < array_records.length; i++) {
+        (function () {
+            var element_id = array_records[i].id;
+            array_records[i].addEventListener("click", function() { showDetailsForRecord(element_id); }, false);
+        }());
+    }
 }
 
 
 
 function showDetailsForRecord(id) {
     console.log("POM" + id);
-    controller.showDetails(this.id);
+    controller.showDetails(id);
 
 }
 
@@ -77,7 +79,6 @@ function showDetailsForRecord(id) {
 function onload() {
     
     checkStatus();
-    console.log("START");
 
     var a = document.getElementsByClassName('tabs');
     a[0].addEventListener('click',listenerAccount);

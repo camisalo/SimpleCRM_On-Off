@@ -22,13 +22,11 @@ class Model {
 
     saveToLocalDB(data, tab) {
         var openRequest = window.indexedDB.open("CRM", 1);
-        console.log('XX 1');
 
         openRequest.onerror = function(event) {
             console.log(event);
         };
         openRequest.onsuccess = function(event) {
-            console.log('XX 2');
 
             var db = openRequest.result;
             db.onerror = function(event) {
@@ -58,13 +56,11 @@ class Model {
     getRecords(tab){
         return new Promise((resolve, reject) => {
             var openRequest = window.indexedDB.open("CRM", 1);
-            console.log('XX 1');
 
             openRequest.onerror = function(event) {
                 console.log(event);
             };
             openRequest.onsuccess = function(event) {
-                console.log('XX 2');
 
                 var db = openRequest.result;
                 db.onerror = function(event) {
@@ -101,13 +97,14 @@ class Model {
                     console.error(event.target);
                     window.alert("Database error: " + event.target.wePutrrorMessage || event.target.error.name || event.target.error || event.target.errorCode);
                 };
-                console.log(tab);
+                console.log(id);
                 var transaction = db.transaction(tab, 'readonly');
                 var itemStore = transaction.objectStore(tab);
             
-                console.log(id);
-                itemStore.get(id).onsuccess = function(event) {
-                    resolve(event.target.result);
+                var request = itemStore.get(parseInt(id));
+                request.onsuccess = function() {
+                    console.log("Model --> " + request.result);
+                    resolve(request.result);
                 };
                 
             }
