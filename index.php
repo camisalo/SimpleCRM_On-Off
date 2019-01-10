@@ -29,8 +29,8 @@
             <ul>
                 <li><a class="tabs" href="#Accounts">Accounts</a></li>
                 <li><a class="tabs" href="#Contacts">Contacts</a></li>
-                <li><a class="tabs" href="#Attempts">Attempts</a></li>
-                <li><a class="tabs" href="#Opportunities">Opportunities</a></li>
+                <li><a class="tabs" href="#Attempts">Asset</a></li>
+                <li><a class="tabs" href="#Opportunities">Opportunity</a></li>
                 <li style="float:right"><a id="status" href="#synchro">Status</a>
                 <li style="float:right"><a class="active" href="#synchro">Synchronize</a>
             </ul>
@@ -38,8 +38,30 @@
 
         <div id="view">
             <div id="left-menu">
-                <h2>Details</h2>
+                <div id="change-details-add">
+                    <div id="details">
+                        <p>Details</p>
+                    </div>
+                    <div id="new">
+                        <p>New +</p>
+                    </div>
+                </div>
                 <div id="form">
+
+
+                    <form action="/action_page.php">
+                        Name:<br>
+                        <input type="text" name="name">
+                        <br>
+                        address:<br>
+                        <input type="text" name="address">
+                        <br>
+                        phone:<br>
+                        <input type="text" name="phone">
+                    </form> 
+                    <div id="button">
+                        <p>Update</p>
+                    </div>
 
                 </div>
             </div>

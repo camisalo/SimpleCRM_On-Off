@@ -11,6 +11,7 @@ class Controller {
    }
 
    synchronize(){
+
       model.getRecordsFromServer("http://localhost:8080/crm/account")
            .then((data) => {
                content.innerHTML = data;
@@ -27,6 +28,22 @@ class Controller {
             })
             .catch((err) => {alert(err);}
         );
+        model.getRecordsFromServer("http://localhost:8080/crm/asset")
+           .then((data) => {
+               content.innerHTML = data;
+               
+               model.saveToLocalDB(data, Tab.ASSET);
+            })
+            .catch((err) => {alert(err);}
+        );
+        model.getRecordsFromServer("http://localhost:8080/crm/opportunity")
+           .then((data) => {
+               content.innerHTML = data;
+               
+               model.saveToLocalDB(data, Tab.OPPORTUNITY);
+            })
+            .catch((err) => {alert(err);}
+        );
      }
       
    changeTab() {
@@ -40,21 +57,16 @@ class Controller {
    }
 
    showRecords(data){
-
-
-      var supervisor = new Supervisor();
-      supervisor.build();
-
-
-
       var content = document.getElementById('content');
-      var table = "<table><tr><th>Name</th><th>address</th><th>phone</th></tr>";
-      var i;
-      for (i=0;i<Object.keys(data).length;i++){
-         table += "<tr id=\""+data[i].id+"\"><td>"+ data[i].name+"</td><td>"+data[i].address+"</td><td>"+data[i].phone+"</td></th>";
-      }
-      table += "</table>";
-      content.innerHTML = table;
+      var builder
+      if (this.actualTab == Tab.ACCOUNTS) builder = new AccountBuilder(data);
+      else if (this.actualTab == Tab.CONTACTS) builder = new ContactBuilder(data);
+      else if (this.actualTab == Tab.ASSET) builder = new AssetBuilder(data);
+      else if (this.actualTab == Tab.OPPORTUNITY) builder = new OpportunityBuilder(data);
+      var supervisor = new Supervisor(builder);
+      supervisor.build();
+      var res = builder.getResoult();
+      content.innerHTML = res;
    }
 
    showDetails(id) {

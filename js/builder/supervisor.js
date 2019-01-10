@@ -1,10 +1,11 @@
-class Supervisor {
-
-    constructor(Builder) {
-        var Builder = Builder;
+var Supervisor = /** @class */ (function () {
+    function Supervisor(Builder) {
+        this.builder = Builder;
     }
-
-    build() {
-        console.log("BUDOWNICZY KONSTRUUJE: ");
-    }
-}
+    Supervisor.prototype.build = function () {
+        this.builder.buildHeader();
+        this.builder.buildContent();
+        this.builder.buildFooter();
+    };
+    return Supervisor;
+}());

@@ -6,9 +6,14 @@ var Status = {
 var Tab = {
     ACCOUNTS: 'account',
     CONTACTS: 'contact',
-    ATTEMPTS: 'attempt',
-    OPPORTUNITIES: 'opportunities',
+    ASSET: 'asset',
+    OPPORTUNITY: 'opportunity',
   };
+
+var Action = {
+    DETAILS: 'details',
+    NEW: 'new',
+}
 
 var status;
 var controller = new Controller();
@@ -37,14 +42,14 @@ function listenerContacts() {
 
 function listenerAttempts() {
     clearColorTabs();
-    controller.actualTab = Tab.ATTEMPTS;
+    controller.actualTab = Tab.ASSET;
     this.style.backgroundColor = 'green';
     afterRecordClickListener();
 }
 
 function listenerOpportunities() {
     clearColorTabs();
-    controller.actualTab = Tab.OPPORTUNITIES;
+    controller.actualTab = Tab.OPPORTUNITY;
     this.style.backgroundColor = 'green';
     afterRecordClickListener();
 }
@@ -86,7 +91,24 @@ function onload() {
     a[2].addEventListener('click',listenerAttempts);
     a[3].addEventListener('click',listenerOpportunities);
 
+    // lisnery dla Details i New
+    var b = document.getElementById('change-details-add').childNodes;
+    console.log(b);
+    b[1].addEventListener('click',changeToDetails);
+    b[3].addEventListener('click',changeToAdd)
+
     setInterval(checkStatus,1000);
+}
+
+function changeToDetails() {
+    document.getElementById('details').style.backgroundColor = '#4CAF50';
+    document.getElementById('new').style.backgroundColor = '#b6b6b6';
+
+}
+
+function changeToAdd() {
+    document.getElementById('details').style.backgroundColor = '#b6b6b6';
+    document.getElementById('new').style.backgroundColor = '#4CAF50';
 }
 
 function checkStatus() {
