@@ -11,7 +11,8 @@
     <link rel="stylesheet" type="text/css" href="style/menu.css"/>
     <link rel="stylesheet" type="text/css" href="style/view.css"/>
     <link rel="shortcut icon" href="#" />
-   
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/builder/supervisor.js"></script>
     <script src="js/builder/TableBuilder.js"></script>
     <script src="js/singleton.js"></script>
@@ -49,20 +50,12 @@
                 <div id="form">
 
 
-                    <form action="/action_page.php">
-                        Name:<br>
-                        <input type="text" name="name">
-                        <br>
-                        address:<br>
-                        <input type="text" name="address">
-                        <br>
-                        phone:<br>
-                        <input type="text" name="phone">
-                    </form> 
-                    <div id="button">
-                        <p>Update</p>
-                    </div>
+                    
+                    
 
+                </div>
+                <div id="button">
+                    <p>Update</p>
                 </div>
             </div>
             <div id="content">

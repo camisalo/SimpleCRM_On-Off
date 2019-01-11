@@ -56,6 +56,10 @@ class Controller {
       );
    }
 
+   checkTab() {
+      return this.actualTab;
+   }
+
    showRecords(data){
       var content = document.getElementById('content');
       var builder
@@ -70,15 +74,32 @@ class Controller {
    }
 
    showDetails(id) {
-      model.getRecordsById(this.actualTab, id)
-         .then((data) => {
-            var details = document.getElementById('form');
-            details.innerHTML = data;
+      return new Promise((resolve, reject) => {
+         model.getRecordsById(this.actualTab, id)
+            .then((data) => {
+               resolve(data)
 
-         })
-         .catch((err) => {alert(err);}
-      );
+            })
+            .catch((err) => {alert(err);}
+         );
+      });
    }
+
+   saveToLocalDb(record) {
+      model.saveToLocalDB(record, this.actualTab);
+      changeTab();
+   }
+
+
+
+
+
+
+
+
+
+
+
 
 
 

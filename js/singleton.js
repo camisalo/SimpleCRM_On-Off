@@ -34,10 +34,10 @@ var localdb = (function () {
    
         request.onupgradeneeded = function(event) {
         instance = event.target.result;
-        var objectStore1 = instance.createObjectStore("account", {keyPath: "id"});
-        var objectStore2 = instance.createObjectStore("contact", {keyPath: "id"});
-        var objectStore3 = instance.createObjectStore("asset", {keyPath: "id"});
-        var objectStore4 = instance.createObjectStore("opportunity", {keyPath: "id"});
+        var objectStore1 = instance.createObjectStore("account", { keyPath: "id", autoIncrement:true });
+        var objectStore2 = instance.createObjectStore("contact", { keyPath: "id", autoIncrement:true });
+        var objectStore3 = instance.createObjectStore("asset", { keyPath: "id", autoIncrement:true });
+        var objectStore4 = instance.createObjectStore("opportunity", { keyPath: "id", autoIncrement:true });
         }
     }
  

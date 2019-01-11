@@ -19,7 +19,29 @@ class Model {
             httpReq.send(null); 
         });    
     }
+//TO DO !!!!!!!!!!!!!!!!
 
+    // syncWithCentralDb(data, url) {
+    //     return new Promise((resolve, reject) => { 
+    //         var httpReq = new XMLHttpRequest(); 
+    //         httpReq.onreadystatechange = () => { 
+    //             if (httpReq.readyState === 4) { 
+    //                 if (httpReq.status === 200) { 
+    //                     resolve(JSON.parse(httpReq.responseText)); 
+    //                 } else { 
+    //                    reject(new Error(httpReq.statusText)); 
+    //                 } 
+    //             } 
+    //         }
+    //         httpReq.open("POST", url, true); 
+    //        // httpReq.withCredentials = false;
+    //         httpReq.setRequestHeader('Content-Type','application/json');
+    //         //httpReq.setRequestHeader
+    //         httpReq.send(data); 
+    //     });  
+    // }
+
+// zapisywanie całej tablicy w lokalnej bazie danych
     saveToLocalDB(data, tab) {
         var openRequest = window.indexedDB.open("CRM", 1);
 
@@ -42,6 +64,7 @@ class Model {
 
             function putNext() {
                 if (i<data.length) {
+                    console.log(data[i]);
                     itemStore.put(data[i]).onsuccess = putNext;
                     ++i;
                 } else {   // complete
@@ -51,6 +74,10 @@ class Model {
             }   
         }
     }
+// zapisywanie jednego rekordu w lokalnej bazie danych (chyba nie potrzeba :p)
+    // saveRecordToLocalDB(data, tab) {
+
+    // }
 
 
     getRecords(tab){
