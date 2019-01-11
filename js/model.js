@@ -21,25 +21,25 @@ class Model {
     }
 //TO DO !!!!!!!!!!!!!!!!
 
-    // syncWithCentralDb(data, url) {
-    //     return new Promise((resolve, reject) => { 
-    //         var httpReq = new XMLHttpRequest(); 
-    //         httpReq.onreadystatechange = () => { 
-    //             if (httpReq.readyState === 4) { 
-    //                 if (httpReq.status === 200) { 
-    //                     resolve(JSON.parse(httpReq.responseText)); 
-    //                 } else { 
-    //                    reject(new Error(httpReq.statusText)); 
-    //                 } 
-    //             } 
-    //         }
-    //         httpReq.open("POST", url, true); 
-    //        // httpReq.withCredentials = false;
-    //         httpReq.setRequestHeader('Content-Type','application/json');
-    //         //httpReq.setRequestHeader
-    //         httpReq.send(data); 
-    //     });  
-    // }
+    syncWithServer(data, url) {
+        return new Promise((resolve, reject) => { 
+            var httpReq = new XMLHttpRequest(); 
+            httpReq.onreadystatechange = () => { 
+                if (httpReq.readyState === 4) { 
+                    if (httpReq.status === 200) { 
+                        resolve(JSON.parse(httpReq.responseText)); 
+                    } else { 
+                       reject(new Error(httpReq.statusText)); 
+                    } 
+                } 
+            }
+            httpReq.open("POST", url, true); 
+           // httpReq.withCredentials = false;
+            httpReq.setRequestHeader('Content-Type','application/json');
+            //httpReq.setRequestHeader
+            httpReq.send(data); 
+        });  
+    }
 
 // zapisywanie całej tablicy w lokalnej bazie danych
     saveToLocalDB(data, tab) {

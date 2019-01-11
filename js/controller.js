@@ -87,7 +87,13 @@ class Controller {
 
    saveToLocalDb(record) {
       model.saveToLocalDB(record, this.actualTab);
-      changeTab();
+      model.syncWithServer(record, "http://localhost:8080/crm/account")
+         .then((data) => {
+            changeTab();
+         })
+         .catch((err) =>{alert(err);}
+         );
+
    }
 
 
