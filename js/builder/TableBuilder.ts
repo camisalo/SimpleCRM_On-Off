@@ -23,7 +23,7 @@ class AccountBuilder implements TableBuilder{
     buildContent() {
         var i;
         for (i=0;i<Object.keys(this.records).length;i++){
-            this.table += "<tr id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].address+"</td><td>"+this.records[i].phone+"</td></th>";
+            this.table += "<tr class=\""+this.records[i].state+"\" id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].address+"</td><td>"+this.records[i].phone+"</td></th>";
         }
     }
 
@@ -51,7 +51,7 @@ class ContactBuilder implements TableBuilder{
     buildContent() {
         var i;
         for (i=0;i<Object.keys(this.records).length;i++){
-            this.table += "<tr id=\""+this.records[i].id+"\"><td>"+ this.records[i].firstname+"</td><td>"+this.records[i].lastname+"</td><td>"+this.records[i].birthdate+"</td><td>"+this.records[i].email+"</td></th>";
+            this.table += "<tr class=\""+this.records[i].state+"\" id=\""+this.records[i].id+"\"><td>"+ this.records[i].firstname+"</td><td>"+this.records[i].lastname+"</td><td>"+this.records[i].birthdate+"</td><td>"+this.records[i].email+"</td></th>";
         }
     }
 
@@ -79,7 +79,7 @@ class AssetBuilder implements TableBuilder{
     buildContent() {
         var i;
         for (i=0;i<Object.keys(this.records).length;i++){
-            this.table += "<tr id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].description+"</td><td>"+this.records[i].price+" USD</td></th>";
+            this.table += "<tr class=\""+this.records[i].state+"\" id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].description+"</td><td>"+this.records[i].price+" USD</td></th>";
         }
     }
 
@@ -107,7 +107,7 @@ class OpportunityBuilder implements TableBuilder{
     buildContent() {
         var i;
         for (i=0;i<Object.keys(this.records).length;i++){
-            this.table += "<tr id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].amount+" USD</td><td>"+this.records[i].opendate+"</td><td>"+this.records[i].closedate+"</td><td>"+this.records[i].stage+"</td></th>";
+            this.table += "<tr class=\""+this.records[i].state+"\" id=\""+this.records[i].id+"\"><td>"+ this.records[i].name+"</td><td>"+this.records[i].amount+" USD</td><td>"+this.records[i].opendate+"</td><td>"+this.records[i].closedate+"</td><td>"+this.records[i].stage+"</td></th>";
         }
     }
 

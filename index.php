@@ -32,8 +32,8 @@
                 <li><a class="tabs" href="#Contacts">Contacts</a></li>
                 <li><a class="tabs" href="#Attempts">Asset</a></li>
                 <li><a class="tabs" href="#Opportunities">Opportunity</a></li>
-                <li style="float:right"><a id="status" href="#synchro">Status</a>
-                <li style="float:right"><a class="active" href="#synchro">Synchronize</a>
+                <li style="float:right"><a id="status" href="#synchro">Status</a></li>
+                <li style="float:right"><a id="synchronize" href="#synchro">Synchronize</a></li>
             </ul>
         </div>
 
@@ -50,12 +50,15 @@
                 <div id="form">
 
 
-                    
-                    
+                </div>
+                <div id="relations">
 
                 </div>
                 <div id="button">
                     <p>Update</p>
+                </div>
+                <div id="button-delete">
+                    <p>Delete</p>
                 </div>
             </div>
             <div id="content">

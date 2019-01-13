@@ -8,7 +8,7 @@ var AccountBuilder = /** @class */ (function () {
     AccountBuilder.prototype.buildContent = function () {
         var i;
         for (i = 0; i < Object.keys(this.records).length; i++) {
-            this.table += "<tr id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].address + "</td><td>" + this.records[i].phone + "</td></th>";
+            this.table += "<tr class=\"" + this.records[i].state + "\" id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].address + "</td><td>" + this.records[i].phone + "</td></th>";
         }
     };
     AccountBuilder.prototype.buildFooter = function () {
@@ -29,7 +29,7 @@ var ContactBuilder = /** @class */ (function () {
     ContactBuilder.prototype.buildContent = function () {
         var i;
         for (i = 0; i < Object.keys(this.records).length; i++) {
-            this.table += "<tr id=\"" + this.records[i].id + "\"><td>" + this.records[i].firstname + "</td><td>" + this.records[i].lastname + "</td><td>" + this.records[i].birthdate + "</td><td>" + this.records[i].email + "</td></th>";
+            this.table += "<tr class=\"" + this.records[i].state + "\" id=\"" + this.records[i].id + "\"><td>" + this.records[i].firstname + "</td><td>" + this.records[i].lastname + "</td><td>" + this.records[i].birthdate + "</td><td>" + this.records[i].email + "</td></th>";
         }
     };
     ContactBuilder.prototype.buildFooter = function () {
@@ -50,7 +50,7 @@ var AssetBuilder = /** @class */ (function () {
     AssetBuilder.prototype.buildContent = function () {
         var i;
         for (i = 0; i < Object.keys(this.records).length; i++) {
-            this.table += "<tr id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].description + "</td><td>" + this.records[i].price + " USD</td></th>";
+            this.table += "<tr class=\"" + this.records[i].state + "\" id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].description + "</td><td>" + this.records[i].price + " USD</td></th>";
         }
     };
     AssetBuilder.prototype.buildFooter = function () {
@@ -71,7 +71,7 @@ var OpportunityBuilder = /** @class */ (function () {
     OpportunityBuilder.prototype.buildContent = function () {
         var i;
         for (i = 0; i < Object.keys(this.records).length; i++) {
-            this.table += "<tr id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].amount + " USD</td><td>" + this.records[i].opendate + "</td><td>" + this.records[i].closedate + "</td><td>" + this.records[i].stage + "</td></th>";
+            this.table += "<tr class=\"" + this.records[i].state + "\" id=\"" + this.records[i].id + "\"><td>" + this.records[i].name + "</td><td>" + this.records[i].amount + " USD</td><td>" + this.records[i].opendate + "</td><td>" + this.records[i].closedate + "</td><td>" + this.records[i].stage + "</td></th>";
         }
     };
     OpportunityBuilder.prototype.buildFooter = function () {

@@ -1,6 +1,7 @@
 class Model {
 
-    getRecordsFromServer(url) {
+    getRecordsFromServer(tab) {
+        var url = "http://localhost:8080/crm/" + tab;
         return new Promise((resolve, reject) => { 
             var httpReq = new XMLHttpRequest(); 
             httpReq.onreadystatechange = () => { 
@@ -13,118 +14,80 @@ class Model {
                 } 
             }
             httpReq.open("GET", url, true); 
-           // httpReq.withCredentials = false;
             httpReq.setRequestHeader('Content-Type','application/json');
-            //httpReq.setRequestHeader
             httpReq.send(null); 
-        });    
+        });
     }
 //TO DO !!!!!!!!!!!!!!!!
 
-    syncWithServer(data, url) {
+    sendRecordsToServer(data, tab) {
+        // console.log(data);
+        var url = "http://localhost:8080/crm/" + tab;
         return new Promise((resolve, reject) => { 
             var httpReq = new XMLHttpRequest(); 
             httpReq.onreadystatechange = () => { 
-                if (httpReq.readyState === 4) { 
-                    if (httpReq.status === 200) { 
-                        resolve(JSON.parse(httpReq.responseText)); 
-                    } else { 
-                       reject(new Error(httpReq.statusText)); 
-                    } 
+                if (httpReq.readyState === 4 && httpReq.status === 200) {
+                    // console.log("WYSŁANO " + httpReq.statusText);
+                    resolve("OK"); 
+                } else { 
+                    // console.log(httpReq.statusText);
+                    // reject(new Error(httpReq.status)); 
                 } 
+                
             }
             httpReq.open("POST", url, true); 
-           // httpReq.withCredentials = false;
             httpReq.setRequestHeader('Content-Type','application/json');
-            //httpReq.setRequestHeader
-            httpReq.send(data); 
+            httpReq.send(JSON.stringify(data));
         });  
     }
 
 // zapisywanie całej tablicy w lokalnej bazie danych
     saveToLocalDB(data, tab) {
-        var openRequest = window.indexedDB.open("CRM", 1);
+        return new Promise((resolve) => {
 
-        openRequest.onerror = function(event) {
-            console.log(event);
-        };
-        openRequest.onsuccess = function(event) {
-
-            var db = openRequest.result;
-            db.onerror = function(event) {
-                // Generic error handler for all errors targeted at this database's requests
-                console.error(event.target);
-                window.alert("Database error: " + event.target.wePutrrorMessage || event.target.error.name || event.target.error || event.target.errorCode);
-            };
-            console.log(tab);
+            var db = localdb.getInstance();
+            // console.log(tab);
             var transaction = db.transaction(tab, 'readwrite');
             var itemStore = transaction.objectStore(tab);
             var i=0;
             putNext();
-
+                
             function putNext() {
                 if (i<data.length) {
-                    console.log(data[i]);
+                    // console.log(data[i]);
                     itemStore.put(data[i]).onsuccess = putNext;
                     ++i;
                 } else {   // complete
-                    console.log('populate complete');
-                    //callback();
+                // console.log('populate complete');
+                resolve("complete");
                 }
             }   
-        }
+        });
     }
-// zapisywanie jednego rekordu w lokalnej bazie danych (chyba nie potrzeba :p)
-    // saveRecordToLocalDB(data, tab) {
-
-    // }
 
 
     getRecords(tab){
         return new Promise((resolve, reject) => {
-            var openRequest = window.indexedDB.open("CRM", 1);
 
-            openRequest.onerror = function(event) {
-                console.log(event);
-            };
-            openRequest.onsuccess = function(event) {
-
-                var db = openRequest.result;
-                db.onerror = function(event) {
-                    // Generic error handler for all errors targeted at this database's requests
-                    console.error(event.target);
-                    window.alert("Database error: " + event.target.wePutrrorMessage || event.target.error.name || event.target.error || event.target.errorCode);
-                };
-                console.log(tab);
-                var transaction = db.transaction(tab, 'readonly');
-                var itemStore = transaction.objectStore(tab);
+            var db = localdb.getInstance();
+            // console.log(tab);
+            var transaction = db.transaction(tab, 'readonly');
+            var itemStore = transaction.objectStore(tab);
             
-                if ('getAll' in itemStore) {
-                    // IDBObjectStore.getAll() will return the full set of items in our store.
-                    itemStore.getAll().onsuccess = function(event) {
-                        resolve(event.target.result);
-                    };
-                }
+            if ('getAll' in itemStore) {
+                // IDBObjectStore.getAll() will return the full set of items in our store.
+                itemStore.getAll().onsuccess = function(event) {
+                    resolve(event.target.result);
+                };
             }
         });
     }
 
     getRecordsById(tab, id){
         return new Promise((resolve, reject) => {
-            var openRequest = window.indexedDB.open("CRM", 1);
+                var db = localdb.getInstance();
 
-            openRequest.onerror = function(event) {
-                console.log(event);
-            };
-            openRequest.onsuccess = function(event) {
-
-                var db = openRequest.result;
-                db.onerror = function(event) {
-                    // Generic error handler for all errors targeted at this database's requests
-                    console.error(event.target);
-                    window.alert("Database error: " + event.target.wePutrrorMessage || event.target.error.name || event.target.error || event.target.errorCode);
-                };
-                console.log(id);
+                // console.log(id);
                 var transaction = db.transaction(tab, 'readonly');
                 var itemStore = transaction.objectStore(tab);
             
@@ -134,7 +97,25 @@ class Model {
                     resolve(request.result);
                 };
                 
-            }
+        });
+    }
+
+    deleteAllRecordsFromLocalDb(tab) {
+        return new Promise((resolve) => {
+
+            var db = localdb.getInstance();
+            // console.log(tab);
+            var transaction = db.transaction(tab, 'readwrite');
+            var itemStore = transaction.objectStore(tab);
+            
+            // Make a request to clear all the data out of the object store
+            var objectStoreRequest = itemStore.clear();
+
+            objectStoreRequest.onsuccess = function(event) {
+                // report the success of our request
+                // console.log("Wyczyszczono baze ze wszystkich rekordów");
+                resolve("Wyczyszczono");
+            };
         });
     }
 }

@@ -36,6 +36,15 @@
     background-color: #b6b6b6;
 }
 
+#left-menu #button-delete {
+    float: left;
+    font-size: 20px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    width: 100%;
+    background-color: #ff0000;
+}
+
 #left-menu #form {
     float: left;
     width: 100%;
@@ -78,6 +87,13 @@ table td, #customers th {
 table tr:nth-child(even){background-color: #f2f2f2;}
 
 table tr:hover {background-color: rgb(33, 163, 33);}
+
+table tr.insert {background-color: green;}
+
+table tr.delete {background-color: red;}
+
+table tr.update {background-color: yellow;}
+
 
 table th {
     padding-top: 12px;

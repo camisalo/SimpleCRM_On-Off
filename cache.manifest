@@ -10,10 +10,6 @@ js/controller.js
 js/model.js
 js/builder/supervisor.js
 js/builder/TableBuilder.js
-http://localhost:8080/crm/account
-http://localhost:8080/crm/contact
-http://localhost:8080/crm/asset
-http://localhost:8080/crm/opportunity
 
 CACHE:
 index.php
@@ -25,6 +21,8 @@ js/controller.js
 js/model.js
 js/builder/supervisor.js
 js/builder/TableBuilder.js
+
+NETWORK:
 http://localhost:8080/crm/account
 http://localhost:8080/crm/contact
 http://localhost:8080/crm/asset

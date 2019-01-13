@@ -61,6 +61,13 @@ function afterRecordClickListener() {
     changeToDetails();
 }
 
+function listenerSynchronize() {
+    console.log("SYNCHRONIZE");
+    if (status = Status.ONLINE) {controller.synchronize();}
+    else {alert("Musisz być ONILNE aby zsynchronizować baze");}
+    controller.changeTab();
+}
+
 function addActionListenerToRecords() {
     var content = document.getElementById('content');
     var records = content.childNodes[0].childNodes[0].childNodes;
@@ -78,8 +85,8 @@ function addActionListenerToRecords() {
 function showDetailsForRecord(id) {
     controller.showDetails(id).then((data) => {
         if (detailsornew == Action.DETAILS){
-            console.log(data);
-            activRecord = data;
+            // console.log(data);
+            // activRecord = data;
             if (controller.checkTab() == Tab.ACCOUNTS) showDetailsForAccount(data);
             else if (controller.checkTab() == Tab.CONTACTS) showDetailsForContact(data);
             else if (controller.checkTab() == Tab.ASSET) showDetailsForAsset(data);
@@ -93,6 +100,9 @@ function showDetailsForAccount(account) {
     document.getElementsByName('name')[0].value = account.name;
     document.getElementsByName('address')[0].value = account.address;
     document.getElementsByName('phone')[0].value = account.phone;
+
+    document.getElementById('id_details').innerHTML = account.id;
+    document.getElementById('lastmodified_details').innerHTML = account.lastmodified;
 }
 
 function showDetailsForContact(contact) {
@@ -100,12 +110,18 @@ function showDetailsForContact(contact) {
     document.getElementsByName('lastname')[0].value = contact.lastname;
     document.getElementsByName('birthdate')[0].value = contact.birthdate;
     document.getElementsByName('email')[0].value = contact.email;
+
+    document.getElementById('id_details').innerHTML = contact.id;
+    document.getElementById('lastmodified_details').innerHTML = contact.lastmodified;
 }
 
 function showDetailsForAsset(asset) {
     document.getElementsByName('name')[0].value = asset.name;
     document.getElementsByName('description')[0].value = asset.description;
     document.getElementsByName('price')[0].value = asset.price;
+
+    document.getElementById('id_details').innerHTML = asset.id;
+    document.getElementById('lastmodified_details').innerHTML = asset.lastmodified;
 }
 
 function showDetailsForOpportunity(opportunity) {
@@ -114,6 +130,9 @@ function showDetailsForOpportunity(opportunity) {
     document.getElementsByName('opendate')[0].value = opportunity.opendate;
     document.getElementsByName('closedate')[0].value = opportunity.closedate;
     document.getElementsByName('stage')[0].value = opportunity.stage;
+
+    document.getElementById('id_details').innerHTML = opportunity.id;
+    document.getElementById('lastmodified_details').innerHTML = opportunity.lastmodified;
 }
 
 function onload() {
@@ -126,10 +145,16 @@ function onload() {
     a[2].addEventListener('click',listenerAttempts);
     a[3].addEventListener('click',listenerOpportunities);
 
+    var b = document.getElementById('synchronize');
+    b.addEventListener('click',listenerSynchronize);
+
     // lisnery dla Details i New
     var b = document.getElementById('change-details-add').childNodes;
     b[1].addEventListener('click',changeToDetails);
     b[3].addEventListener('click',changeToAdd)
+
+    localdb.getInstance();
+    // controller = new Controller();
 
     setInterval(checkStatus,1000);
 }
@@ -140,14 +165,18 @@ function changeToDetails() {
     document.getElementById('new').style.backgroundColor = '#b6b6b6';
     document.getElementById('button').innerHTML = "<p>Update</p>";
     var button = document.getElementById('button');
+    var buttondelete = document.getElementById('button-delete');
+    buttondelete.style.display = 'block';
     button.removeEventListener('click', addRecord);
     button.innerHTML = "<p>Update</p>";
     button.addEventListener('click', updateRecord);
+    buttondelete.addEventListener('click',deleteRecord)
     insertForm();
 }
 
 function changeToAdd() {
     detailsornew = Action.NEW;
+    document.getElementById('button-delete').style.display = 'none';
     document.getElementById('details').style.backgroundColor = '#b6b6b6';
     document.getElementById('new').style.backgroundColor = '#4CAF50';
     var button = document.getElementById('button');
@@ -160,20 +189,80 @@ function changeToAdd() {
 
 function updateRecord() {
     console.log("UPDATE");
+    var record;
+    var id = parseInt(document.getElementById('id_details').innerHTML,10);
+    if (controller.checkTab() == Tab.ACCOUNTS){
+        var name = document.getElementsByName('name')[0].value;
+        var address = document.getElementsByName('address')[0].value;
+        var phone = document.getElementsByName('phone')[0].value;
+
+        var record = [{id: id, name: name, address: address, phone: phone, lastmodified: new Date().toMysqlFormat(), state: "update"}];
+    } else if (controller.checkTab() == Tab.CONTACTS){
+        var firstname = document.getElementsByName('firstname')[0].value;
+        var lastname = document.getElementsByName('lastname')[0].value;
+        var birthdate = document.getElementsByName('birthdate')[0].value;
+        var email = document.getElementsByName('email')[0].value;
+
+        var record = [{id: id, firstname: firstname, lastname: lastname, birthdate: birthdate, email: email, lastmodified: new Date().toMysqlFormat(), state: "update"}];
+    } else if (controller.checkTab() == Tab.ASSET){
+        var name = document.getElementsByName('name')[0].value;
+        var description = document.getElementsByName('description')[0].value;
+        var price = document.getElementsByName('price')[0].value;
+
+        var record = [{id: id, name: name, description: description, price: price, lastmodified: new Date().toMysqlFormat(), state: "update"}];
+    } else if (controller.checkTab() == Tab.OPPORTUNITY){
+        var name = document.getElementsByName('name')[0].value;
+        var amount = document.getElementsByName('amount')[0].value;
+        var opendate = document.getElementsByName('opendate')[0].value;
+        var closedate = document.getElementsByName('closedate')[0].value;
+        var stage = document.getElementsByName('stage')[0].value;
+
+        var record = [{id: id, name: name, amount: amount, opendate: opendate, closedate: closedate, stage: stage, lastmodified: new Date().toMysqlFormat(), state: "update"}];
+    }
+    controller.saveRecord(record);
+}
+
+function deleteRecord() {
+    console.log("Delete");
+    var delete_element = document.getElementById('id_details');
+    console.log(delete_element.innerText);
+    controller.deleteRecord(delete_element.innerHTML);
 }
 
 //{id: 2, name: "Skanska", address: "Kraków, Warszawska11", phone: "784322975", lastmodified: "2018-12-24T11:44:32.000+0000"}
 
 function addRecord() {
     console.log("ADD");
-    var name = document.getElementsByName('name')[0].value;
-    var address = document.getElementsByName('address')[0].value;
-    var phone = document.getElementsByName('phone')[0].value;
+    var record;
+    if (controller.checkTab() == Tab.ACCOUNTS){
+        var name = document.getElementsByName('name')[0].value;
+        var address = document.getElementsByName('address')[0].value;
+        var phone = document.getElementsByName('phone')[0].value;
 
-    var record = [{name: name, address: address, phone: phone, lastmodified: new Date().toMysqlFormat()}];
+        var record = [{name: name, address: address, phone: phone, lastmodified: new Date().toMysqlFormat(), state: "insert"}];
+    } else if (controller.checkTab() == Tab.CONTACTS){
+        var firstname = document.getElementsByName('firstname')[0].value;
+        var lastname = document.getElementsByName('lastname')[0].value;
+        var birthdate = document.getElementsByName('birthdate')[0].value;
+        var email = document.getElementsByName('email')[0].value;
 
-    controller.saveToLocalDb(record);
+        var record = [{firstname: firstname, lastname: lastname, birthdate: birthdate, email: email, lastmodified: new Date().toMysqlFormat(), state: "insert"}];
+    } else if (controller.checkTab() == Tab.ASSET){
+        var name = document.getElementsByName('name')[0].value;
+        var description = document.getElementsByName('description')[0].value;
+        var price = document.getElementsByName('price')[0].value;
 
+        var record = [{name: name, description: description, price: price, lastmodified: new Date().toMysqlFormat(), state: "insert"}];
+    } else if (controller.checkTab() == Tab.OPPORTUNITY){
+        var name = document.getElementsByName('name')[0].value;
+        var amount = document.getElementsByName('amount')[0].value;
+        var opendate = document.getElementsByName('opendate')[0].value;
+        var closedate = document.getElementsByName('closedate')[0].value;
+        var stage = document.getElementsByName('stage')[0].value;
+
+        var record = [{name: name, amount: amount, opendate: opendate, closedate: closedate, stage: stage, lastmodified: new Date().toMysqlFormat(), state: "insert"}];
+    }
+    controller.saveRecord(record);
     console.log(record);
 }
 
