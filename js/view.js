@@ -156,7 +156,7 @@ function onload() {
     localdb.getInstance();
     // controller = new Controller();
 
-    setInterval(checkStatus,1000);
+    setInterval(checkStatus,100);
 }
 
 function changeToDetails() {
