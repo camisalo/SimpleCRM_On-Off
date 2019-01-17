@@ -93,7 +93,7 @@ class Model {
             
                 var request = itemStore.get(parseInt(id));
                 request.onsuccess = function() {
-                    console.log("Model --> " + request.result);
+                    // console.log("Model --> " + request.result);
                     resolve(request.result);
                 };
                 

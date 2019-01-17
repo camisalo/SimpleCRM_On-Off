@@ -1,7 +1,7 @@
 CACHE MANIFEST
 
 FALLBACK:
-/ /Wzorce/index.php
+index.html
 style/menu.css
 style/view.css
 js/view.js
@@ -10,9 +10,13 @@ js/controller.js
 js/model.js
 js/builder/supervisor.js
 js/builder/TableBuilder.js
+./forms/account.html
+./forms/asset.html
+./forms/contact.html
+./forms/opportunity.html
 
 CACHE:
-index.php
+index.html
 style/menu.css
 style/view.css
 js/view.js
@@ -21,6 +25,11 @@ js/controller.js
 js/model.js
 js/builder/supervisor.js
 js/builder/TableBuilder.js
+./forms/account.html
+./forms/asset.html
+./forms/contact.html
+./forms/opportunity.html
+https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 
 NETWORK:
 http://localhost:8080/crm/account

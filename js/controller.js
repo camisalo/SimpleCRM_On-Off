@@ -15,6 +15,7 @@ class Controller {
       .then((a) => { console.log("wysłano rekordy na serwer " + a); return model.deleteAllRecordsFromLocalDb(Tab.ACCOUNTS);})
       .then((b) => { console.log("usunięto rekordy z bazy przeglądarki " + b); return model.getRecordsFromServer(Tab.ACCOUNTS);})
       .then((data) => { console.log("Pobrano rekordy z serwera"); model.saveToLocalDB(data, Tab.ACCOUNTS)})
+      .then((data) => { controller.changeTab(); })
       .catch((err) => {alert(err);});
 
       model.getRecords(Tab.CONTACTS)
@@ -22,6 +23,7 @@ class Controller {
       .then((a) => { console.log("wysłano rekordy na serwer " + a); return model.deleteAllRecordsFromLocalDb(Tab.CONTACTS);})
       .then((b) => { console.log("usunięto rekordy z bazy przeglądarki " + b); return model.getRecordsFromServer(Tab.CONTACTS);})
       .then((data) => { console.log("Pobrano rekordy z serwera"); model.saveToLocalDB(data, Tab.CONTACTS)})
+      .then((data) => { controller.changeTab(); })
       .catch((err) => {alert(err);});
 
       model.getRecords(Tab.ASSET)
@@ -29,6 +31,7 @@ class Controller {
       .then((a) => { console.log("wysłano rekordy na serwer " + a); return model.deleteAllRecordsFromLocalDb(Tab.ASSET);})
       .then((b) => { console.log("usunięto rekordy z bazy przeglądarki " + b); return model.getRecordsFromServer(Tab.ASSET);})
       .then((data) => { console.log("Pobrano rekordy z serwera"); model.saveToLocalDB(data, Tab.ASSET)})
+      .then((data) => { controller.changeTab(); })
       .catch((err) => {alert(err);});
 
       model.getRecords(Tab.OPPORTUNITY)
@@ -36,9 +39,10 @@ class Controller {
       .then((a) => { console.log("wysłano rekordy na serwer " + a); return model.deleteAllRecordsFromLocalDb(Tab.OPPORTUNITY);})
       .then((b) => { console.log("usunięto rekordy z bazy przeglądarki " + b); return model.getRecordsFromServer(Tab.OPPORTUNITY);})
       .then((data) => { console.log("Pobrano rekordy z serwera"); model.saveToLocalDB(data, Tab.OPPORTUNITY)})
+      .then((data) => { controller.changeTab(); })
       .catch((err) => {alert(err);});
 
-      controller.changeTab();
+      
      }
       
    changeTab() {

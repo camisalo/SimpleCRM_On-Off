@@ -62,7 +62,7 @@ function afterRecordClickListener() {
 }
 
 function listenerSynchronize() {
-    console.log("SYNCHRONIZE");
+    // console.log("SYNCHRONIZE");
     if (status = Status.ONLINE) {controller.synchronize();}
     else {alert("Musisz być ONILNE aby zsynchronizować baze");}
     controller.changeTab();
