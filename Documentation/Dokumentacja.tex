@@ -11,8 +11,10 @@
 \usepackage{plain}
 \usepackage{caption}
 \usepackage{graphicx}
-
+\usepackage{enumitem,kantlipsum}
 \begin{document}
+
+\renewcommand*{\figurename}{{\small Rys.}}
 
 \begin{figure}[!htb]
 	\centerline{\includegraphics[scale=1]{agh_logo.jpg}}
@@ -36,8 +38,10 @@
 
 	
 \end{center}
-\begin{enumerate}
-	\item \textbf{{\Large Wprowadzenie}}\\ \\
+\begin{enumerate}[leftmargin=0pt]
+
+%% WPROWADZENIE
+    \item \textbf{{\Large Wprowadzenie}}\\ \\
 		\begin{large}
 		\hspace*{1cm}
 		Poniższa dokumentacja opisuje architekturę oraz styl zaprojektowania systemu dodawania osób fizycznych do bazy danych w postaci aplikacji webowej w standardzie HTML5 \cite{hoy2011html5}.  Technologia HTML5 powstała w 2014 roku i w dobie urządzeń mobilnych jest aktualnie najbardziej wspieranym standardem dla tworzenia stron internetowych, wartymi wspomnienia zaletami HTML5 są:
@@ -54,15 +58,7 @@
 		
 		\end{large}
 
-
-%	\begin{enumerate}
-%		\item a^{•}
-%		\item b
-%		\item c
-%		\item d 
-%	\end{enumerate}
-
-	\newpage
+%% CELE PROJEKTU
 	\item \textbf{{\Large Cele projektu}}\\ \\
 	\begin{large}
 	\hspace*{1cm}
@@ -71,26 +67,90 @@
 	
 	\end{large}
 
-	%\newpage
-	\item \textbf{{\Large Zasady działania systemu}}\\
+%% ZASADY DZIAŁANIA SYSTEMU
+	\item \textbf{{\Large Zasady działania systemu}}\\ \\
+	\hspace*{1cm}
+	Wszystkie operacje operujące na bazie danych wykonywane są po stronie użytkownika i zapisywane w indexedDb. Naciśnięcie przycisku synchronizacji wywołuje proces synchronizacji lokalnej bazy z centralną na zasadzie który rekord ma wcześniejszą datę zapisu. 
 	
-	\item \textbf{{\Large Opis funkcjonalności}}\\
+	\item \textbf{{\Large Opis funkcjonalności}}\\ \\
+    \hspace*{1cm}
+    Użytkownik ma możliwość dodawania/uaktualniania/usuwania oraz dodawania zależności dla rekordów w prostym systemie CRM. System zawiera 4 zakładki: Account, Contact, Asset, Opportunity, daje to możliwość prostego zarządzania przedsięwzięciami w firmie. 
+    
+%% TECHNOLOGIE
+    \item \textbf{{\Large Wykorzystane technologie}}\\ \\
+    \hspace*{1cm}
+    Do wykonanaia projektu wykorzystano następujące technologie:
+    \begin{itemize}
 
-	\item \textbf{{\Large Schemat procesów}}\\
-	
-	\item \textbf{{\Large Etapy rozwoju systemu}}\\
-	
-	\item \textbf{{\Large GUI}}\\
-	
-		\begin{figure}[!htb]
-			\centerline{\includegraphics[scale=0.3]{online.jpg}}
-		\end{figure}
+    \item Spring - wykorzystany w celu udostępnienia API po stronie serwera, które służy do udostępniania i odbierania rekordów naszego systemu CRM.
+    \item JavaScript - wykorzystany po stronie klienta do obsługi bazy danych przeglądarki oraz do łączenia z serwerem.
+    \item TypeScript - wykorzystywany w celu wprowadzenia obiektowości do projektu i wykorzystania wzorca Buildera.
+    \item HTML5
+    \item API IndexedDB - baza danych przeglądarki na której operuje klient
 
-		\begin{figure}[!htb]
-			\centerline{\includegraphics[scale=0.3]{offline.jpg}}
-		\end{figure}	
+    \end{itemize}
+
+%% SCHEMAT PROCESÓW	\item \textbf{{\Large Schemat procesów}}\\ \\
 	
-	\item \textbf{{\Large Scenariusze / przypadki użycia}}\\
+%% ETAPY ROZWOJU SYSTEMU	\item \textbf{{\Large Etapy rozwoju systemu}}\\ \\
+	
+\newpage	
+%% WYBRANE WZORCE	
+\newpage
+	\item \textbf{{\Large Wybrane wzorce}}\\ \\
+	\begin{itemize}
+%% MODEL VIEW PRESENTER	
+	    \item {\Large Model View Presenter}\\ \\
+	    Model View Presenter jest wzorcem powstałym na bazie wzorca MVC. Dane nie są przekazywane bezpośrednio z modelu do widoku jak to ma miejsce w MVC. Prezener wysyła zapytanie do modelu, model zwraca dane do prezentera, prezenter przetwarza otrzymane dane i przekazuje do widoku.
+	    
+	    \begin{figure}[!htb]
+	        \centerline{\includegraphics[scale=1]{mvp.png}}
+	        \caption{{\footnotesize MVP - diagram klas}}
+        \end{figure}
+        
+\newpage
+%% BUILDER        
+        \item {\Large Builder}\\ \\
+	    Wzorzec Builder pozwala na podział skomplikowanego procesu tworzenia obiektu, na kilka mniejszych etapów, gdzie każdy z nich może być implementowany na różne sposoby. Jest on interfejsem, który pozwala budować części takiego obiektu. 
+	    
+	    \begin{figure}[!htb]
+	        \centerline{\includegraphics[scale=1]{builder.png}}
+	        \caption{{\footnotesize Builder - diagram klas}}
+        \end{figure}
+%% SINGLETON        
+        \item {\Large Singleton}\\ \\
+	    Umożliwia stworzenie tylko jednej instancji obiektu danej klasy. Tylko ten obiekt będzie używany w ramach całej aplikacji.
+	    
+	    \begin{figure}[!htb]
+	        \centerline{\includegraphics[scale=1]{singleton.png}}
+	        \caption{{\footnotesize Singleton - diagram klas}}
+        \end{figure}
+        
+\newpage
+%% ABSTRACT FACTORY
+        \item {\Large Abstract Factory}\\ \\
+	    Pozwala tworzyć powiązane lub zależne obiekty bez specyfikowania ich konkretnych klas. Tworzone obiekty zwykle implementują ten sam interfejs. Wzorzec ten kładzie nacisk na tworzenie obiektów konkretnej rodziny, a nie na sposób w jaki te obiekty są tworzone.
+
+	
+	\begin{figure}[!htb]
+	        \centerline{\includegraphics[scale=1]{abstractfactory.png}}
+	        \caption{{\footnotesize Abstract Factory - diagram klas}}
+    \end{figure}
+
+
+	\end{itemize}
+	
+% 	\item \textbf{{\Large GUI}}\\
+	
+% 		\begin{figure}[!htb]
+% 			\centerline{\includegraphics[scale=0.3]{online.JPG}}
+% 		\end{figure}
+
+% 		\begin{figure}[!htb]
+% 			\centerline{\includegraphics[scale=0.3]{offline.JPG}}
+% 		\end{figure}	
+	
+% 	\item \textbf{{\Large Scenariusze / przypadki użycia}}\\
 	
 	\newpage
 	
