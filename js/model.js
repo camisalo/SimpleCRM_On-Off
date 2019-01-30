@@ -51,7 +51,7 @@ class Model {
             var itemStore = transaction.objectStore(tab);
             var i=0;
             putNext();
-                
+            
             function putNext() {
                 if (i<data.length) {
                     // console.log(data[i]);
