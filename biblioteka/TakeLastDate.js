@@ -3,7 +3,10 @@ class TakeLastDate extends SaveRecordsStrategy {
         super();
     }
 
-    compare() {
-        
+    compare(localRecord, centralRecord) {
+        if(localRecord.lastmodified < centralRecord.lastmodified)
+            return "central";
+        else
+            return "local";
     }
 }

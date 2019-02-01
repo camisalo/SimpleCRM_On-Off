@@ -44,10 +44,6 @@ class DatabaseSynchronizer {
     }
 
     synchronize(tableName) {
-<<<<<<< HEAD
-        this.tableCollection.getByTableName(tableName).synchronize(this.strategy);
-=======
         this.tableCollection.getByTableName(tableName);
->>>>>>> 8c05c123565da4b66404eec3ec812b3bdc55a244
     }
 }
