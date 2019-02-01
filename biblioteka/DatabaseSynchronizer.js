@@ -1,5 +1,3 @@
-let Strategies = Object.freeze({ "ChooseRecordToSave": 1, "TakeLastDate": 2 });
-
 //prefixes of implementation that we want to test
 window.indexedDB = window.indexedDB || window.mozIndexedDB || 
 window.webkitIndexedDB || window.msIndexedDB;
@@ -23,13 +21,13 @@ class DatabaseSynchronizer {
     setStrategy(strategy) {
         switch(strategy) {
             case 1:
-                this.strategy = Strategies.ChooseRecordToSave;
+                this.strategy = new ChooseRecordToSave();
                 break;
             case 2:
-                this.strategy = Strategies.TakeLastDate;
+                this.strategy = new TakeLastDate();
                 break;
             default:
-                this.strategy = Strategies.TakeLastDate;
+                this.strategy = new TakeLastDate();
         }
     }
 
@@ -42,12 +40,10 @@ class DatabaseSynchronizer {
     }
 
     synchronize() {
-        for(let i = 0; i < tableCollection.list.lenght; ++i) {
-            tableCollection.list[i].synchronize();
-        }
+        this.tableCollection.synchronize(this.strategy);
     }
 
     synchronize(tableName) {
-        this.tableCollection.getByTableName(tableName).synchronize();
+        this.tableCollection.getByTableName(tableName).synchronize(this.strategy);
     }
 }

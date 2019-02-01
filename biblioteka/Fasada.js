@@ -1,7 +1,3 @@
-
-
-
-
 class ITable {
     constructor() {
         if (new.target === Abstract) {
