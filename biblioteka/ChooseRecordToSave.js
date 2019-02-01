@@ -10,4 +10,3 @@ class ChooseRecordToSave extends SaveRecordsStrategy {
         return "local";
     }
 }
-

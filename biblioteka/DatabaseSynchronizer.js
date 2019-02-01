@@ -13,8 +13,8 @@ class DatabaseSynchronizer {
 
     constructor(localDbName) {
         this.localDbName = localDbName;
-        this.localDb = window.indexedDB.open(localDbName);
         this.localDbTables = {};
+        this.localDb = LocalDbSingleton.getInstance(localDbName);
         this.tableCollection = new TableCollection();
         this.setStrategy();
     }
