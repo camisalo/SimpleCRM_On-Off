@@ -9,4 +9,3 @@ class SaveRecordsStrategy {
         throw new Error("Method 'compare' must be implemented.");
     }
 }
-
