@@ -139,7 +139,9 @@ class Table extends ITable {
 
         // send to server updated records
 
-        // 
+        // delete local records
+
+        
     }
 }
 
