@@ -26,20 +26,24 @@ class Table extends ITable {
         .then((data) => {
             this.central_records = data;
             console.log("Pobrano rekordy z bazy danch");
+            console.log(this.central_records);
             this.ldb.getRecords(this.name);
         })
         .then((data) => {
             this.local_records = data;
-            console.log("Pobrano rekordy z lokalnej bazy");
-            var i, c_rec, l_rec, res;
-            var recordToUpdate = [];
-            for (i=0;i<central_records.length;i++){
-                c_rec = central_records[i];
-                l_rec = this.getRecordById(c_rec.id);
-                res = strategy.compare(central_records[i]);
-                if (res == "central") recordToUpdate.push(c_rec);
+            if (this.local_records != undefined){
+                console.log("Pobrano rekordy z lokalnej bazy");
+                console.log(this.local_records);
+                var i, c_rec, l_rec, res;
+                var recordToUpdate = [];
+                for (i=0;i<this.local_records.length;i++){
+                    l_rec = this.local_records[i];
+                    c_rec = this.getRecordById(l_rec.id);
+                    res = strategy.compare(this.central_records[i]);
+                    if (res == "central") recordToUpdate.push(c_rec);
+                }
+                console.log(recordToUpdate);
             }
-            console.log(recordToUpdate);
         })
 
 
@@ -57,7 +61,7 @@ class Table extends ITable {
 
 
     getRecordById(id) {
-        return this.ldb.filter(
+        return this.local_records.filter(
             function(data){ return data.id == id }
         );
     }
