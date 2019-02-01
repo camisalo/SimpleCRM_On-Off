@@ -1,6 +1,6 @@
 class ITable {
     constructor() {
-        if (new.target === Abstract) {
+        if (new.target === ITable) {
             throw new TypeError("Cannot construct Abstract instances directly");
         }
         if (this.synchronize === undefined) {
@@ -9,6 +9,7 @@ class ITable {
         }
     }
 }
+
 
 class Table extends ITable {
     
@@ -30,13 +31,15 @@ class Table extends ITable {
         .then((data) => {
             this.local_records = data;
             console.log("Pobrano rekordy z lokalnej bazy");
-            var c_rec, l_rec;
+            var c_rec, l_rec, res;
             var recordToUpdate = [];
             for (i=0;i<central_records.length;i++){
                 c_rec = central_records[i];
                 l_rec = this.getRecordById(c_rec.id);
-                strategy.compare(central_records[i]);
+                res = strategy.compare(central_records[i]);
+                if (res = "central") recordToUpdate.push(c_rec);
             }
+            console.log(recordToUpdate);
         })
 
 
@@ -58,11 +61,16 @@ class Table extends ITable {
             function(data){ return data.id == id }
         );
     }
+
+    getName(){
+        return this.name;
+    }
 }
 
 class TableCollection extends ITable {
     
     constructor() {
+        super();
         this.list = [];
     }
 
@@ -73,22 +81,27 @@ class TableCollection extends ITable {
         }
     }
 
-    add() {
+    getByTableName(tableName) {
+        var i;
+        for (i=0;i<this.list.lenght;i++){
+            console.log(tableName[i].getName());
+            if (this.tableName[i].getName() == tableName){
+                this.tableName[i].synchronize();
+            }
+        }
+    }
+    add(record) {
+        this.list.push(record);
+    }
 
+    remove(record){
+        var index = this.list.indexOf(record);
+        if(index>=0) {
+            this.list.splice(index, 1);
+        }
     }
 }
 
 
 
-class DatabaseSynchronizer {
-
-    constructor() {
-
-    }
-
-    addTable(name) {
-
-    }
-    
-}
 
