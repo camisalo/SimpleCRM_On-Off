@@ -14,13 +14,13 @@ class ITable {
 class Table extends ITable {
     
     constructor(name, endpoint) {
+        super();
         this.name = name;
         this.endpoint = endpoint;
-        this.ldb = [];
     }
 
     synchronize(strategy) {
-        var cdb = new CentralBase();
+        this.cdb = new CentralDB();
         this.ldb = new LocalDB();
         cb.getRecords(this.endpoint)
         .then((data) => {
@@ -37,7 +37,7 @@ class Table extends ITable {
                 c_rec = central_records[i];
                 l_rec = this.getRecordById(c_rec.id);
                 res = strategy.compare(central_records[i]);
-                if (res = "central") recordToUpdate.push(c_rec);
+                if (res == "central") recordToUpdate.push(c_rec);
             }
             console.log(recordToUpdate);
         })
@@ -90,8 +90,9 @@ class TableCollection extends ITable {
             }
         }
     }
-    add(record) {
-        this.list.push(record);
+    add(name, endpoint) {
+        var table = new Table(name, endpoint);
+        this.list.push(table);
     }
 
     remove(record){

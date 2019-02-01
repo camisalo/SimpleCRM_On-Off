@@ -9,10 +9,10 @@ class Controller {
       this.content = document.getElementById('content');
 
       this.synchronizer = new DatabaseSynchronizer("CRM");
-      this.synchronizer.addTable("account");
-      this.synchronizer.addTable("contact");
-      this.synchronizer.addTable("asset");
-      this.synchronizer.addTable("opportunity");
+      this.synchronizer.addTable("account","localhost:8080/crm/account");
+      this.synchronizer.addTable("contact","localhost:8080/crm/contact");
+      this.synchronizer.addTable("asset","localhost:8080/crm/asset");
+      this.synchronizer.addTable("opportunity","localhost:8080/crm/opportunity");
    }
 
    synchronize(){
