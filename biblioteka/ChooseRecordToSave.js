@@ -3,8 +3,8 @@ class ChooseRecordToSave extends SaveRecordsStrategy {
         super();   
     }
 
-    compare(_, _) {
-        if(confirm("TAK - rekord z bazy centralnej\nNIE - rekord z bazy lokalnej")) {
+    compare(localRecord, centralRecord) {
+        if(confirm(`TAK - rekord z bazy centralnej\nNIE - rekord z bazy lokalnej\nRekord z bazy centralnej: ${centralRecord}\nRekord z bazy lokalnej: ${localRecord}`)) {
             return "central";
         }
         return "local";
