@@ -16,6 +16,7 @@ class DatabaseSynchronizer {
         this.localDb = window.indexedDB.open(localDbName);
         this.localDbTables = {};
         this.tableCollection = new TableCollection();
+        this.setStrategy();
     }
     
     setStrategy(strategy) {
@@ -44,6 +45,10 @@ class DatabaseSynchronizer {
     }
 
     synchronize(tableName) {
-        this.tableCollection.getByTableName(tableName);
+        if (tableName == undefined){
+            this.tableCollection.synchronize(this.strategy);
+        } else {
+            this.tableCollection.getByTableName(tableName);
+        }
     }
 }
