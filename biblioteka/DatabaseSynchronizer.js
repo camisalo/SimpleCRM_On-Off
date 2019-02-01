@@ -48,6 +48,6 @@ class DatabaseSynchronizer {
     }
 
     synchronize(tableName) {
-        this.tableCollection.getByTableName(tableName).synchronize();
+        this.tableCollection.getByTableName(tableName);
     }
 }

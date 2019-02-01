@@ -9,11 +9,15 @@ class Controller {
       this.content = document.getElementById('content');
 
       this.synchronizer = new DatabaseSynchronizer("CRM");
-      
+      this.synchronizer.addTable("account");
+      this.synchronizer.addTable("contact");
+      this.synchronizer.addTable("asset");
+      this.synchronizer.addTable("opportunity");
    }
 
    synchronize(){
 
+      this.synchronizer.synchronize();
 
       // model.getRecords(Tab.ACCOUNTS)
       // .then((data) => { console.log("pobrano rekordy"); return model.sendRecordsToServer(data,Tab.ACCOUNTS);})
