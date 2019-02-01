@@ -1,116 +1,6 @@
 
-class CentralDB {
-    
-    getRecords(url) {
-        return new Promise((resolve, reject) => { 
-            var httpReq = new XMLHttpRequest(); 
-            httpReq.onreadystatechange = () => { 
-                if (httpReq.readyState === 4) { 
-                    if (httpReq.status === 200) { 
-                        resolve(JSON.parse(httpReq.responseText)); 
-                    } else { 
-                    reject(new Error(httpReq.statusText)); 
-                    } 
-                } 
-            }
-            httpReq.open("GET", url, true); 
-            httpReq.setRequestHeader('Content-Type','application/json');
-            httpReq.send(null);
-        });
-    }
 
-    insertRecords(data, url) {
-        return new Promise((resolve, reject) => { 
-            var httpReq = new XMLHttpRequest(); 
-            httpReq.onreadystatechange = () => { 
-                if (httpReq.readyState === 4 && httpReq.status === 200) {
-                    // console.log("WYSŁANO " + httpReq.statusText);
-                    resolve("OK"); 
-                } else { 
-                    // console.log(httpReq.statusText);
-                    // reject(new Error(httpReq.status)); 
-                } 
-                
-            }
-            httpReq.open("POST", url, true); 
-            httpReq.setRequestHeader('Content-Type','application/json');
-            httpReq.send(JSON.stringify(data));
-        });  
-    }
-}
 
-class LocalDB {
-    getRecords(tab) {
-        return new Promise((resolve, reject) => {
-
-            var db = localdb.getInstance();
-            var transaction = db.transaction(tab, 'readonly');
-            var itemStore = transaction.objectStore(tab);
-            
-            if ('getAll' in itemStore) {
-                itemStore.getAll().onsuccess = function(event) {
-                    resolve(event.target.result);
-                };
-            }
-        });
-    }
-
-    insertRecords(data, tab) {
-        return new Promise((resolve) => {
-
-            var db = localdb.getInstance();
-            // console.log(tab);
-            var transaction = db.transaction(tab, 'readwrite');
-            var itemStore = transaction.objectStore(tab);
-            var i=0;
-            putNext();
-            
-            function putNext() {
-                if (i<data.length) {
-                    // console.log(data[i]);
-                    itemStore.put(data[i]).onsuccess = putNext;
-                    ++i;
-                } else {   // complete
-                // console.log('populate complete');
-                resolve("complete");
-                }
-            }   
-        });
-    }
-
-    getRecordById(id, tab){
-        return new Promise((resolve, reject) => {
-            var db = localdb.getInstance();
-
-            // console.log(id);
-            var transaction = db.transaction(tab, 'readonly');
-            var itemStore = transaction.objectStore(tab);
-        
-            var request = itemStore.get(parseInt(id));
-            request.onsuccess = function() {
-                // console.log("Model --> " + request.result);
-                resolve(request.result);
-            };
-            
-        });
-    }
-
-    
-    deleteAllRecords(tab) {
-        return new Promise((resolve) => {
-
-            var db = localdb.getInstance();
-            var transaction = db.transaction(tab, 'readwrite');
-            var itemStore = transaction.objectStore(tab);
-            
-            var objectStoreRequest = itemStore.clear();
-
-            objectStoreRequest.onsuccess = function(event) {
-                resolve("Wyczyszczono");
-            };
-        });
-    }
-}
 
 class ITable {
     constructor() {
@@ -129,12 +19,33 @@ class Table extends ITable {
     constructor(name, endpoint) {
         this.name = name;
         this.endpoint = endpoint;
+        this.ldb = [];
     }
 
-    synchronize() {
-        var cb = new CentralBase();
+    synchronize(strategy) {
+        var cdb = new CentralBase();
+        this.ldb = new LocalDB();
         cb.getRecords(this.endpoint)
-        .then((data) => { })
+        .then((data) => {
+            this.central_records = data;
+            console.log("Pobrano rekordy z bazy danch");
+            this.ldb.getRecords(this.name);
+        })
+        .then((data) => {
+            this.local_records = data;
+            console.log("Pobrano rekordy z lokalnej bazy");
+            var c_rec, l_rec;
+            var recordToUpdate = [];
+            for (i=0;i<central_records.length;i++){
+                c_rec = central_records[i];
+                l_rec = this.getRecordById(c_rec.id);
+                strategy.compare(central_records[i]);
+            }
+        })
+
+
+
+
         // compare local records with server and save latest version
 
         // send to server updated records
@@ -142,6 +53,14 @@ class Table extends ITable {
         // delete local records
 
         
+    }
+
+
+
+    getRecordById(id) {
+        return this.ldb.filter(
+            function(data){ return data.id == id }
+        );
     }
 }
 
