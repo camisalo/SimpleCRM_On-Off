@@ -25,7 +25,7 @@ class LocalDB {
             putNext();
             
             function putNext() {
-                if (i<data.length) {
+                if (data != undefined && i<data.length) {
                     // console.log(data[i]);
                     itemStore.put(data[i]).onsuccess = putNext;
                     ++i;

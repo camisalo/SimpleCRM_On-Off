@@ -25,24 +25,33 @@ class Table extends ITable {
         this.cdb.getRecords(this.endpoint)
         .then((data) => {
             this.central_records = data;
-            console.log("Pobrano rekordy z bazy danch");
+            console.log("Pobrano rekordy z centralnej bazy danch");
             console.log(this.central_records);
             this.ldb.getRecords(this.name);
         })
         .then((data) => {
             this.local_records = data;
+            var recordToUpdate = [];
             if (this.local_records != undefined){
                 console.log("Pobrano rekordy z lokalnej bazy");
                 console.log(this.local_records);
                 var i, c_rec, l_rec, res;
-                var recordToUpdate = [];
                 for (i=0;i<this.local_records.length;i++){
                     l_rec = this.local_records[i];
                     c_rec = this.getRecordById(l_rec.id);
-                    res = strategy.compare(this.central_records[i]);
+                    res = strategy.compare(l_rec,c_rec);
                     if (res == "central") recordToUpdate.push(c_rec);
                 }
                 console.log(recordToUpdate);
+            }
+            this.cdb.insertRecords(recordToUpdate);
+        })
+        .then((data) => {
+            this.cdb.getRecords(this.endpoint);
+        })
+        .then((data) => {
+            if (data != undefined){
+                this.ldb.insertRecords(data, this.name);
             }
         })
 
@@ -87,10 +96,10 @@ class TableCollection extends ITable {
 
     getByTableName(tableName) {
         var i;
-        for (i=0;i<this.list.lenght;i++){
-            console.log(tableName[i].getName());
-            if (this.tableName[i].getName() == tableName){
-                this.tableName[i].synchronize();
+        for (i=0;i<this.list.length;i++){
+            console.log(this.list[i].getName());
+            if (this.list[i].getName() == tableName){
+                this.list[i].synchronize();
             }
         }
     }

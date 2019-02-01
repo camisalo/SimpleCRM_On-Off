@@ -21,20 +21,23 @@ class CentralDB {
 
     insertRecords(data, url) {
         return new Promise((resolve, reject) => { 
-            var httpReq = new XMLHttpRequest(); 
-            httpReq.onreadystatechange = () => { 
-                if (httpReq.readyState === 4 && httpReq.status === 200) {
-                    // console.log("WYSŁANO " + httpReq.statusText);
-                    resolve("OK"); 
-                } else { 
-                    // console.log(httpReq.statusText);
-                    // reject(new Error(httpReq.status)); 
-                } 
-                
+            if (data.length > 0){
+                var httpReq = new XMLHttpRequest(); 
+                httpReq.onreadystatechange = () => { 
+                    if (httpReq.readyState === 4 && httpReq.status === 200) {
+                        // console.log("WYSŁANO " + httpReq.statusText);
+                        resolve("OK"); 
+                    } else { 
+                        // console.log(httpReq.statusText);
+                        // reject(new Error(httpReq.status)); 
+                    } 
+                    
+                }
+                httpReq.open("POST", url, true); 
+                httpReq.setRequestHeader('Content-Type','application/json');
+                httpReq.send(JSON.stringify(data));
             }
-            httpReq.open("POST", url, true); 
-            httpReq.setRequestHeader('Content-Type','application/json');
-            httpReq.send(JSON.stringify(data));
+            resolve("OK");
         });  
     }
 }
