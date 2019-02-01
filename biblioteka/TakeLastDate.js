@@ -6,7 +6,8 @@ class TakeLastDate extends SaveRecordsStrategy {
     compare(localRecord, centralRecord) {
         if(localRecord.lastmodified < centralRecord.lastmodified)
             return "central";
-        else
+        else if(localRecord.lastmodified > centralRecord.lastmodified)
             return "local";
+        return "equal";
     }
 }
