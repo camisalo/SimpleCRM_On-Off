@@ -22,7 +22,7 @@ class Table extends ITable {
     synchronize(strategy) {
         this.cdb = new CentralDB();
         this.ldb = new LocalDB();
-        cb.getRecords(this.endpoint)
+        this.cdb.getRecords(this.endpoint)
         .then((data) => {
             this.central_records = data;
             console.log("Pobrano rekordy z bazy danch");
@@ -31,7 +31,7 @@ class Table extends ITable {
         .then((data) => {
             this.local_records = data;
             console.log("Pobrano rekordy z lokalnej bazy");
-            var c_rec, l_rec, res;
+            var i, c_rec, l_rec, res;
             var recordToUpdate = [];
             for (i=0;i<central_records.length;i++){
                 c_rec = central_records[i];
