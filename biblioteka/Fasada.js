@@ -94,11 +94,18 @@ class TableCollection extends ITable {
             }
         }
     }
+    add(record) {
+        this.list.push(record);
+    }
 
-    add() {
-
+    remove(record){
+        var index = this.list.indexOf(record);
+        if(index>=0) {
+            this.list.splice(index, 1);
+        }
     }
 }
+
 
 
 
