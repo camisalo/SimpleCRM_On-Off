@@ -27,6 +27,7 @@ class Table extends ITable {
             this.central_records = data;
             console.log("Pobrano rekordy z centralnej bazy danch");
             console.log(this.central_records);
+            console.log("aaa " + his.name);
             this.ldb.getRecords(this.name);
         })
         .then((data) => {
