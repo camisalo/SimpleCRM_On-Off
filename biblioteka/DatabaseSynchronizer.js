@@ -41,15 +41,15 @@ class DatabaseSynchronizer {
         delete this.localDbTables[localName];
     }
 
-    synchronize() {
-        this.tableCollection.synchronize(this.strategy);
-    }
+
 
     synchronize(tableName) {
-        if (tableName == undefined){
-            this.tableCollection.synchronize(this.strategy);
-        } else {
-            this.tableCollection.getByTableName(tableName);
+        if (navigator.onLine){
+            if (tableName == undefined){
+                this.tableCollection.synchronize(this.strategy);
+            } else {
+                this.tableCollection.getByTableName(this.strategy, tableName);
+            }
         }
     }
 }

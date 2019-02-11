@@ -7,9 +7,15 @@ class LocalDB {
             var itemStore = transaction.objectStore(tab);
             
             if ('getAll' in itemStore) {
-                itemStore.getAll().onsuccess = function(event) {
+                
+                var a = itemStore.getAll();
+                a.onsuccess = function(event) {
+                    console.log(event.target.result);   
                     resolve(event.target.result);
                 };
+                a.onerror = function(event) {
+                    resolve(event.target.result);
+                }
             }
         });
     }

@@ -12,12 +12,12 @@ window.msIDBKeyRange
 var localdb = (function () {
     var instance;
  
-    function createInstance(localDbName) {
+    function createInstance() {
         if (!window.indexedDB) {
            window.alert("Your browser doesn't support a stable version of IndexedDB.")
         }
 
-        var request = window.indexedDB.open(localDbName);
+        var request = window.indexedDB.open("CRM", 1);
    
         request.onerror = function(event) {
            console.log("error: ");
@@ -30,13 +30,17 @@ var localdb = (function () {
    
         request.onupgradeneeded = function(event) {
             instance = event.target.result;
+            var objectStore1 = instance.createObjectStore("account", {keyPath: "id", autoIncrement: true});
+            var objectStore2 = instance.createObjectStore("contact", {keyPath: "id", autoIncrement: true});
+            var objectStore3 = instance.createObjectStore("asset", {keyPath: "id", autoIncrement: true});
+            var objectStore4 = instance.createObjectStore("opportunity", {keyPath: "id", autoIncrement: true});
         }
     }
  
     return {
-        getInstance: function (localDbName) {
+        getInstance: function() {
             if (!instance) {
-                instance = createInstance(localDbName);
+                instance = createInstance();
             }
             return instance;
         }

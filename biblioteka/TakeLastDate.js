@@ -4,10 +4,10 @@ class TakeLastDate extends SaveRecordsStrategy {
     }
 
     compare(localRecord, centralRecord) {
-        if(localRecord.lastmodified < centralRecord.lastmodified)
-            return "central";
-        else if(localRecord.lastmodified > centralRecord.lastmodified)
+        if (centralRecord == undefined || localRecord.lastmodified > centralRecord.lastmodified)
             return "local";
+        else if(localRecord.lastmodified < centralRecord.lastmodified)
+            return "central";
         return "equal";
     }
 }

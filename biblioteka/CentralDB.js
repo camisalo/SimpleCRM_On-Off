@@ -35,8 +35,9 @@ class CentralDB {
                 httpReq.open("POST", url, true); 
                 httpReq.setRequestHeader('Content-Type','application/json');
                 httpReq.send(JSON.stringify(data));
+            } else {
+                resolve("OK");
             }
-            resolve("OK");
         });  
     }
 }

@@ -17,7 +17,7 @@ class Controller {
 
    synchronize(){
 
-      this.synchronizer.synchronize("account");
+      this.synchronizer.synchronize();
 
       // model.getRecords(Tab.ACCOUNTS)
       // .then((data) => { console.log("pobrano rekordy"); return model.sendRecordsToServer(data,Tab.ACCOUNTS);})

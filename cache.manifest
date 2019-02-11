@@ -14,6 +14,14 @@ js/builder/TableBuilder.js
 ./forms/asset.html
 ./forms/contact.html
 ./forms/opportunity.html
+./biblioteka/CentralDB.js
+./biblioteka/ChooseRecordToSave.js
+./biblioteka/Composite.js
+./biblioteka/DatabaseSynchronizer.js
+./biblioteka/LocalDB.js
+./biblioteka/LocalDbSingleton.js
+./biblioteka/SaveRecordsStrategy.js
+./biblioteka/TakeLastDate.js
 
 CACHE:
 index.html
@@ -29,6 +37,14 @@ js/builder/TableBuilder.js
 ./forms/asset.html
 ./forms/contact.html
 ./forms/opportunity.html
+./biblioteka/CentralDB.js
+./biblioteka/ChooseRecordToSave.js
+./biblioteka/Composite.js
+./biblioteka/DatabaseSynchronizer.js
+./biblioteka/LocalDB.js
+./biblioteka/LocalDbSingleton.js
+./biblioteka/SaveRecordsStrategy.js
+./biblioteka/TakeLastDate.js
 https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 
 NETWORK:

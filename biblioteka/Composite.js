@@ -27,8 +27,8 @@ class Table extends ITable {
             this.central_records = data;
             console.log("Pobrano rekordy z centralnej bazy danch");
             console.log(this.central_records);
-            console.log("aaa " + his.name);
-            this.ldb.getRecords(this.name);
+            console.log("aaa " + this.name);
+            return this.ldb.getRecords(this.name);
         })
         .then((data) => {
             this.local_records = data;
@@ -40,15 +40,19 @@ class Table extends ITable {
                 for (i=0;i<this.local_records.length;i++){
                     l_rec = this.local_records[i];
                     c_rec = this.getRecordById(l_rec.id);
-                    res = strategy.compare(l_rec,c_rec);
-                    if (res == "central") recordToUpdate.push(c_rec);
+                    res = strategy.compare(l_rec,c_rec[0]);
+                    if (res == "local") recordToUpdate.push(l_rec);
                 }
                 console.log(recordToUpdate);
             }
-            this.cdb.insertRecords(recordToUpdate);
+            return this.cdb.insertRecords(recordToUpdate,this.endpoint);
         })
         .then((data) => {
-            this.cdb.getRecords(this.endpoint);
+            return this.ldb.deleteAllRecords(this.name);
+        })
+        .then((data) => {
+            console.log("Data: " + data);
+            return this.cdb.getRecords(this.endpoint);
         })
         .then((data) => {
             if (data != undefined){
@@ -71,7 +75,7 @@ class Table extends ITable {
 
 
     getRecordById(id) {
-        return this.local_records.filter(
+        return this.central_records.filter(
             function(data){ return data.id == id }
         );
     }
@@ -95,12 +99,12 @@ class TableCollection extends ITable {
         }
     }
 
-    getByTableName(tableName) {
+    getByTableName(strategy, tableName) {
         var i;
         for (i=0;i<this.list.length;i++){
             console.log(this.list[i].getName());
             if (this.list[i].getName() == tableName){
-                this.list[i].synchronize();
+                this.list[i].synchronize(strategy);
             }
         }
     }
