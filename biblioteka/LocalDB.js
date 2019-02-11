@@ -17,7 +17,7 @@ class LocalDB {
     insertRecords(data, tab) {
         return new Promise((resolve) => {
 
-            var db = localdb.getInstance();
+            var db = LocalDbSingleton.getInstance();
             // console.log(tab);
             var transaction = db.transaction(tab, 'readwrite');
             var itemStore = transaction.objectStore(tab);
@@ -39,7 +39,7 @@ class LocalDB {
 
     getRecordById(id, tab){
         return new Promise((resolve, reject) => {
-            var db = localdb.getInstance();
+            var db = LocalDbSingleton.getInstance();
 
             // console.log(id);
             var transaction = db.transaction(tab, 'readonly');
@@ -58,7 +58,7 @@ class LocalDB {
     deleteAllRecords(tab) {
         return new Promise((resolve) => {
 
-            var db = localdb.getInstance();
+            var db = LocalDbSingleton.getInstance();
             var transaction = db.transaction(tab, 'readwrite');
             var itemStore = transaction.objectStore(tab);
             
