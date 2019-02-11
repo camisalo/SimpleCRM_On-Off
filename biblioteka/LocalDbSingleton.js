@@ -9,7 +9,7 @@ window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange ||
 window.msIDBKeyRange
 
 
-var localdb = (function () {
+var LocalDbSingleton = (function () {
     var instance;
  
     function createInstance(localDbName) {
