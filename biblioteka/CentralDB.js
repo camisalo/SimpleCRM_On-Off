@@ -1,4 +1,3 @@
-
 class CentralDB {
     
     getRecords(url) {

@@ -2,7 +2,7 @@ class LocalDB {
     getRecords(tab) {
         return new Promise((resolve, reject) => {
 
-            var db = localdb.getInstance();
+            var db = LocalDbSingleton.getInstance();
             var transaction = db.transaction(tab, 'readonly');
             var itemStore = transaction.objectStore(tab);
             
