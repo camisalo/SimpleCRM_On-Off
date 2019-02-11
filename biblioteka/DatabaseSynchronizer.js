@@ -34,7 +34,7 @@ class DatabaseSynchronizer {
 
     addTable(localName, serverEndpoint) {
         this.localDbTables[localName] = serverEndpoint;
-        this.tableCollection.add(localName,serverEndpoint);
+        this.tableCollection.add(localName,serverEndpoint, this.localDbName);
     }
 
     removeTable(localName) {

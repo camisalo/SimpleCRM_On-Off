@@ -10,13 +10,13 @@ class ITable {
     }
 }
 
-
 class Table extends ITable {
     
-    constructor(name, endpoint) {
+    constructor(name, endpoint, localDbName) {
         super();
         this.name = name;
         this.endpoint = endpoint;
+        this.localDbName = localDbName;
     }
 
     synchronize(strategy) {
@@ -87,10 +87,10 @@ class TableCollection extends ITable {
         this.list = [];
     }
 
-    synchronize(strategia) {
+    synchronize(strategy) {
         var i;
         for (i=0;i<this.list.length;i++){
-           this.list[i].synchronize(strategia);
+           this.list[i].synchronize(strategy);
         }
     }
 
@@ -103,8 +103,9 @@ class TableCollection extends ITable {
             }
         }
     }
-    add(name, endpoint) {
-        var table = new Table(name, endpoint);
+
+    add(name, endpoint, localDbName) {
+        var table = new Table(name, endpoint, localDbName);
         this.list.push(table);
     }
 
