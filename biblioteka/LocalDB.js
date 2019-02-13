@@ -10,7 +10,6 @@ class LocalDB {
                 
                 var a = itemStore.getAll();
                 a.onsuccess = function(event) {
-                    console.log(event.target.result);   
                     resolve(event.target.result);
                 };
                 a.onerror = function(event) {

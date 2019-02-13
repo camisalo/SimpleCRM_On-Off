@@ -61,6 +61,10 @@ function afterRecordClickListener() {
     changeToDetails();
 }
 
+function refreshPageInterval() {
+    controller.changeTab();
+}
+
 function listenerSynchronize() {
     // console.log("SYNCHRONIZE");
     if (status = Status.ONLINE) {controller.synchronize();}
@@ -157,6 +161,7 @@ function onload() {
     // controller = new Controller();
 
     setInterval(checkStatus,100);
+    setInterval(refreshPageInterval,500);
 }
 
 function changeToDetails() {
@@ -188,7 +193,7 @@ function changeToAdd() {
 }
 
 function updateRecord() {
-    console.log("UPDATE");
+    // console.log("UPDATE");
     var record;
     var id = parseInt(document.getElementById('id_details').innerHTML,10);
     if (controller.checkTab() == Tab.ACCOUNTS){
@@ -223,16 +228,16 @@ function updateRecord() {
 }
 
 function deleteRecord() {
-    console.log("Delete");
+    // console.log("Delete");
     var delete_element = document.getElementById('id_details');
-    console.log(delete_element.innerText);
+    // console.log(delete_element.innerText);
     controller.deleteRecord(delete_element.innerHTML);
 }
 
 //{id: 2, name: "Skanska", address: "Kraków, Warszawska11", phone: "784322975", lastmodified: "2018-12-24T11:44:32.000+0000"}
 
 function addRecord() {
-    console.log("ADD");
+    // console.log("ADD");
     var record;
     if (controller.checkTab() == Tab.ACCOUNTS){
         var name = document.getElementsByName('name')[0].value;
@@ -263,7 +268,7 @@ function addRecord() {
         var record = [{name: name, amount: amount, opendate: opendate, closedate: closedate, stage: stage, lastmodified: new Date().toMysqlFormat(), state: "insert"}];
     }
     controller.saveRecord(record);
-    console.log(record);
+    // console.log(record);
 }
 
 function insertForm() {
@@ -288,6 +293,9 @@ function checkStatus() {
     }
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 function twoDigits(d) {
     if(0 <= d && d < 10) return "0" + d.toString();

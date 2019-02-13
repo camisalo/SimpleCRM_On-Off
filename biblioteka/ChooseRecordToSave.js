@@ -4,9 +4,17 @@ class ChooseRecordToSave extends SaveRecordsStrategy {
     }
 
     compare(localRecord, centralRecord) {
-        if(centralRecord != undefined && confirm(`TAK - rekord z bazy centralnej\nNIE - rekord z bazy lokalnej\nRekord z bazy centralnej: ${centralRecord}\nRekord z bazy lokalnej: ${localRecord}`)) {
-            return "central";
+        if (centralRecord == undefined && confirm(`OK - wstaw\nanuluj - nie wstawiaj\nChcesz wstawić rekord do bazy centralnej: ${JSON.stringify(localRecord)}`)){
+            return "local";
         }
-        return "local";
+        if (localRecord.lastmodified > centralRecord.lastmodified && confirm(`OK - synchronizuj rekord\nanuluj - porzuć zmiany\nRekord z bazy centralnej:
+         ${JSON.stringify(centralRecord)}\nRekord z bazy lokalnej:
+          ${JSON.stringify(localRecord)}`)){
+            return "local";
+        } else if (localRecord.lastmodified < centralRecord.lastmodified)
+            return "central";
+        else
+            return "equal";
+
     }
 }
